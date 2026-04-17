@@ -1,0 +1,8 @@
+{
+  "name": "ed-massage-bot",
+  "version": "1.0.0",
+  "main": "api/book.js",
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}
