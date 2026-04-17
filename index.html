@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html class="dark" lang="ru">
+
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>E.D.Massage - Serenity</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
@@ -48,6 +52,7 @@
             --text-base: #0c0f0f;
             --text-variant: #64748b;
         }
+
         .dark {
             --bg-base: #0c0f0f;
             --surface: rgba(34, 39, 39, 0.6);
@@ -56,47 +61,73 @@
             --text-base: #e3e6e6;
             --text-variant: #a8acab;
         }
+
         .glass-panel {
             background: var(--surface);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
         }
+
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
         }
+
         body {
             background-color: var(--bg-base);
             background-image: radial-gradient(circle at 0% 0%, rgba(50, 89, 83, 0.15) 0%, transparent 50%),
-                              radial-gradient(circle at 100% 100%, var(--border-glow) 0%, transparent 50%);
+                radial-gradient(circle at 100% 100%, var(--border-glow) 0%, transparent 50%);
             background-attachment: fixed;
             min-height: 100vh;
             color: var(--on-surface);
             transition: background-color 0.4s ease;
         }
-        .screen { display: none; animation: fadeIn 0.3s ease-out; }
-        .screen.active { display: block; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
         }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .selected-item {
             background: #a5cfc7 !important;
             color: #1f4741 !important;
             border-color: #a5cfc7 !important;
         }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
     </style>
 </head>
+
 <body class="font-body text-on-surface antialiased">
-    
+
     <!-- HEADER -->
     <header class="fixed top-0 w-full z-50 bg-teal-950/60 backdrop-blur-3xl border-b border-white/5">
         <div class="flex justify-between items-center px-8 h-20 w-full">
             <div class="flex items-center gap-4">
-                <span class="text-2xl font-semibold tracking-[0.2em] text-teal-100 font-headline uppercase">E.D.Massage</span>
+                <span
+                    class="text-2xl font-semibold tracking-[0.2em] text-teal-100 font-headline uppercase">E.D.Massage</span>
             </div>
-            <div onclick="showScreen('profile')" class="w-10 h-10 rounded-full overflow-hidden border border-white/10 cursor-pointer">
-                <img id="user-avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiNHBP9L0mV3Eib2GyO6eU64c895niMANprGjsh7wsFoOjun6RkU8qNQkxtE_0GSiIuN6ilhfQFzUXBuQjybCx2K4JRe-3aWltPSnOK22jZr0SLu-eSbUVCwGI6jt7VJL7ERi97f4nwxDmD1CEUFtK97BTWYIoUGoCYgLRr6bPdQjw81jcU_Vg7FHgyb6WfNAUyAi1NhQN9ISB8ODoDmVrZ6zJHQD5KxOwg_WjMiVPGKzR3_uI0-VxbJIUw4ipfvSyWKOBppVQlWNj">
+            <div onclick="showScreen('profile')"
+                class="w-10 h-10 rounded-full overflow-hidden border border-white/10 cursor-pointer">
+                <img id="user-avatar" class="w-full h-full object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiNHBP9L0mV3Eib2GyO6eU64c895niMANprGjsh7wsFoOjun6RkU8qNQkxtE_0GSiIuN6ilhfQFzUXBuQjybCx2K4JRe-3aWltPSnOK22jZr0SLu-eSbUVCwGI6jt7VJL7ERi97f4nwxDmD1CEUFtK97BTWYIoUGoCYgLRr6bPdQjw81jcU_Vg7FHgyb6WfNAUyAi1NhQN9ISB8ODoDmVrZ6zJHQD5KxOwg_WjMiVPGKzR3_uI0-VxbJIUw4ipfvSyWKOBppVQlWNj">
             </div>
         </div>
     </header>
@@ -104,10 +135,12 @@
     <!-- SCREEN: HOME -->
     <main id="home-screen" class="screen active pt-28 px-6 max-w-5xl mx-auto space-y-12 pb-32">
         <div class="space-y-4 text-center py-10">
-            <p class="font-label text-primary text-sm tracking-widest uppercase opacity-80" data-i18n="tagline">Погружение в покой</p>
+            <p class="font-label text-primary text-sm tracking-widest uppercase opacity-80" data-i18n="tagline">
+                Погружение в покой</p>
             <h1 class="text-5xl font-headline font-semibold text-teal-50" data-i18n="welcome">Добро пожаловать</h1>
             <p class="text-2xl font-headline text-primary font-medium tracking-wide">Diamond Body Studio</p>
-            <p class="text-on-surface-variant max-w-xs mx-auto text-sm leading-relaxed" data-i18n="welcome_sub">Ваше идеальное место для восстановления сил и гармонии тела.</p>
+            <p class="text-on-surface-variant max-w-xs mx-auto text-sm leading-relaxed" data-i18n="welcome_sub">Ваше
+                идеальное место для восстановления сил и гармонии тела.</p>
         </div>
 
         <section class="space-y-6">
@@ -123,13 +156,15 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="grid grid-cols-2 gap-4">
-                <div onclick="showScreen('services')" class="glass-panel p-6 rounded-2xl border border-white/5 text-center space-y-2 cursor-pointer hover:bg-white/5 transition-all">
+                <div onclick="showScreen('services')"
+                    class="glass-panel p-6 rounded-2xl border border-white/5 text-center space-y-2 cursor-pointer hover:bg-white/5 transition-all">
                     <span class="material-symbols-outlined text-3xl text-primary">spa</span>
                     <p class="text-xs font-bold uppercase" data-i18n="services_short">Услуги</p>
                 </div>
-                <div onclick="showScreen('booking')" class="glass-panel p-6 rounded-2xl border border-white/5 text-center space-y-2 cursor-pointer hover:bg-white/5 transition-all">
+                <div onclick="showScreen('booking')"
+                    class="glass-panel p-6 rounded-2xl border border-white/5 text-center space-y-2 cursor-pointer hover:bg-white/5 transition-all">
                     <span class="material-symbols-outlined text-3xl text-primary">event_available</span>
                     <p class="text-xs font-bold uppercase" data-i18n="booking_short">Запись</p>
                 </div>
@@ -139,8 +174,10 @@
         <section class="space-y-6">
             <h2 class="text-2xl font-headline font-medium text-teal-100" data-i18n="our_masters">Наши специалисты</h2>
             <div class="flex gap-4 overflow-x-auto no-scrollbar">
-                <div onclick="selectItem('master', 'Елена', this)" class="flex-shrink-0 w-32 text-center cursor-pointer group selected-item rounded-2xl p-2">
-                    <img class="w-24 h-24 rounded-full mx-auto border-2 border-transparent group-hover:border-primary transition-all object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9ec8utCY9PtsJ14KdUMpqbWBBEMqKKsyxuKBkzWJRwlmlQUrYYUJIXa58Mj5QTNBVyqP4tQBA7C2o8esd4yVF2kQ830vyWA8OxmsckA2eKcOFBRW6I5lc5RZa3Q-cDOZFre5n3rnbigDwrnobrF6OAnGftCYtcNbzCGQca-tUQpBhIpCI6TT_OwyCtXlCfZ8kBkoKYtAC3bRi-7b0SnMb5QYRbEcTNElvjARTg880Z_NAMarW-_HXzShDDkOFqrec1VPO-fuislb9">
+                <div onclick="selectItem('master', 'Елена', this)"
+                    class="flex-shrink-0 w-32 text-center cursor-pointer group selected-item rounded-2xl p-2">
+                    <img class="w-24 h-24 rounded-full mx-auto border-2 border-transparent group-hover:border-primary transition-all object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9ec8utCY9PtsJ14KdUMpqbWBBEMqKKsyxuKBkzWJRwlmlQUrYYUJIXa58Mj5QTNBVyqP4tQBA7C2o8esd4yVF2kQ830vyWA8OxmsckA2eKcOFBRW6I5lc5RZa3Q-cDOZFre5n3rnbigDwrnobrF6OAnGftCYtcNbzCGQca-tUQpBhIpCI6TT_OwyCtXlCfZ8kBkoKYtAC3bRi-7b0SnMb5QYRbEcTNElvjARTg880Z_NAMarW-_HXzShDDkOFqrec1VPO-fuislb9">
                     <p class="mt-2 font-medium" data-i18n="master_elena">Елена</p>
                 </div>
             </div>
@@ -151,24 +188,30 @@
     <main id="services-screen" class="screen pt-28 px-6 max-w-5xl mx-auto space-y-12 pb-32">
         <h1 class="text-4xl font-headline font-bold text-teal-50" data-i18n="services_list_title">Каталог услуг</h1>
         <div class="grid grid-cols-1 gap-4">
-            <div onclick="selectService('Антицеллюлитный массаж', 'от 500 грн', 'Антицеллюлитный', 'Коррекция фигуры • Лимфодренаж')" class="glass-panel p-6 rounded-xl border border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5 transition-all">
+            <div onclick="selectService('Антицеллюлитный массаж', 'от 500 грн', 'Антицеллюлитный', 'Коррекция фигуры • Лимфодренаж')"
+                class="glass-panel p-6 rounded-xl border border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5 transition-all">
                 <div>
                     <h3 class="text-xl font-semibold" data-i18n="svc_anti">Антицеллюлитный</h3>
-                    <p class="text-on-surface-variant text-sm" data-i18n="svc_anti_desc">Коррекция фигуры • Лимфодренаж</p>
+                    <p class="text-on-surface-variant text-sm" data-i18n="svc_anti_desc">Коррекция фигуры • Лимфодренаж
+                    </p>
                 </div>
                 <span class="text-primary font-bold">500 грн</span>
             </div>
-            <div onclick="selectService('Лечебный массаж', 'от 550 грн', 'Лечебный', 'Проработка мышц • Снятие боли')" class="glass-panel p-6 rounded-xl border border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5 transition-all">
+            <div onclick="selectService('Лечебный массаж', 'от 550 грн', 'Лечебный', 'Проработка мышц • Снятие боли')"
+                class="glass-panel p-6 rounded-xl border border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5 transition-all">
                 <div>
                     <h3 class="text-xl font-semibold" data-i18n="svc_med">Лечебный</h3>
-                    <p class="text-on-surface-variant text-sm" data-i18n="svc_med_desc">Проработка мышц • Снятие боли</p>
+                    <p class="text-on-surface-variant text-sm" data-i18n="svc_med_desc">Проработка мышц • Снятие боли
+                    </p>
                 </div>
                 <span class="text-primary font-bold">550 грн</span>
             </div>
-            <div onclick="selectService('Расслабляющий массаж', 'от 600 грн', 'Расслабляющий', 'Relax-session • Ароматерапия')" class="glass-panel p-6 rounded-xl border border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5 transition-all">
+            <div onclick="selectService('Расслабляющий массаж', 'от 600 грн', 'Расслабляющий', 'Relax-session • Ароматерапия')"
+                class="glass-panel p-6 rounded-xl border border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5 transition-all">
                 <div>
                     <h3 class="text-xl font-semibold" data-i18n="svc_relax">Расслабляющий</h3>
-                    <p class="text-on-surface-variant text-sm" data-i18n="svc_relax_desc">Relax-session • Ароматерапия</p>
+                    <p class="text-on-surface-variant text-sm" data-i18n="svc_relax_desc">Relax-session • Ароматерапия
+                    </p>
                 </div>
                 <span class="text-primary font-bold">600 грн</span>
             </div>
@@ -181,11 +224,14 @@
             <span class="material-symbols-outlined">arrow_back</span> <span data-i18n="back">Назад</span>
         </button>
         <div class="glass-panel p-8 rounded-2xl border border-white/5 space-y-6 overflow-hidden">
-            <h1 id="detail-title" class="text-2xl sm:text-3xl md:text-4xl font-headline font-bold break-words leading-tight">Услуга</h1>
+            <h1 id="detail-title"
+                class="text-2xl sm:text-3xl md:text-4xl font-headline font-bold break-words leading-tight">Услуга</h1>
             <p id="detail-desc" class="text-lg text-on-surface-variant leading-relaxed">Описание услуги будет здесь.</p>
             <div class="flex justify-between items-center py-4 border-t border-white/5 gap-4">
                 <span class="text-xl font-bold text-primary whitespace-nowrap" id="detail-price">0 грн</span>
-                <button onclick="showScreen('booking')" class="px-8 py-4 bg-primary text-on-primary rounded-full font-bold" data-i18n="select_time">Выбрать время</button>
+                <button onclick="showScreen('booking')"
+                    class="px-8 py-4 bg-primary text-on-primary rounded-full font-bold" data-i18n="select_time">Выбрать
+                    время</button>
             </div>
         </div>
     </main>
@@ -204,50 +250,65 @@
 
         <div class="pt-10 border-t border-white/5 space-y-4">
             <div class="flex justify-between text-xl px-2">
-                <span class="opacity-60 text-sm uppercase tracking-widest self-center" data-i18n="booking_details">Детали записи:</span>
+                <span class="opacity-60 text-sm uppercase tracking-widest self-center"
+                    data-i18n="booking_details">Детали записи:</span>
                 <span id="booking-summary" class="text-sm font-medium text-right"></span>
             </div>
             <div class="flex justify-between text-xl">
                 <span data-i18n="total">Итого:</span>
                 <span id="final-price" class="font-bold text-primary text-2xl">0 грн</span>
             </div>
-            <button onclick="confirmBooking()" id="confirm-btn" class="w-full py-5 bg-primary text-on-primary rounded-full font-bold text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all" data-i18n="btn_confirm">Подтвердить запись</button>
+            <button onclick="confirmBooking()" id="confirm-btn"
+                class="w-full py-5 bg-primary text-on-primary rounded-full font-bold text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+                data-i18n="btn_confirm">Подтвердить запись</button>
         </div>
     </main>
 
     <!-- SCREEN: PROFILE -->
     <main id="profile-screen" class="screen pt-32 pb-40 px-6 max-w-5xl mx-auto space-y-6">
-        <div class="glass-panel p-8 rounded-3xl border border-white/5 text-center space-y-4 shadow-2xl relative overflow-hidden">
-             <div class="absolute top-0 right-0 p-4">
-                <button onclick="toggleTheme()" class="w-10 h-10 rounded-full glass-panel border border-white/10 flex items-center justify-center text-primary">
+        <div
+            class="glass-panel p-8 rounded-3xl border border-white/5 text-center space-y-4 shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4">
+                <button onclick="toggleTheme()"
+                    class="w-10 h-10 rounded-full glass-panel border border-white/10 flex items-center justify-center text-primary">
                     <span class="material-symbols-outlined" id="theme-icon">light_mode</span>
                 </button>
             </div>
             <img id="profile-pic" class="w-32 h-32 rounded-full mx-auto border-4 border-primary/20 shadow-xl" src="">
             <h1 id="user-display-name" class="text-3xl font-bold">Загрузка...</h1>
-            <p class="text-primary uppercase tracking-widest text-xs font-bold opacity-70" data-i18n="my_visits">Ваши визиты: 0</p>
+            <p id="user-role-badge" class="hidden text-primary uppercase tracking-widest text-[10px] font-black bg-primary/10 border border-primary/20 px-3 py-1 rounded-full w-max mx-auto">ADMIN</p>
+            <p id="regular-user-stats" class="text-primary uppercase tracking-widest text-xs font-bold opacity-70" data-i18n="my_visits">Ваши визиты: 0</p>
         </div>
 
-        <!-- ADMIN BUTTONS (Hidden for regular users) -->
-        <div id="admin-controls" class="hidden space-y-4">
-            <h3 class="text-lg font-bold ml-2 opacity-60 uppercase tracking-widest text-xs flex items-center gap-2">
-                <span class="material-symbols-outlined text-sm">shield_person</span>
-                <span data-i18n="admin_panel">Панель администратора</span>
-            </h3>
-            <div class="grid grid-cols-2 gap-4">
-                <button onclick="showScreen('admin-orders')" class="glass-panel p-6 rounded-2xl border border-primary/20 text-center space-y-2 cursor-pointer hover:bg-primary/5 transition-all">
-                    <span class="material-symbols-outlined text-3xl text-primary">list_alt</span>
-                    <p class="text-xs font-bold uppercase" data-i18n="admin_orders">Заказы</p>
+        <!-- ADMIN ORDER TABS (Only for admin) -->
+        <div id="admin-orders-container" class="hidden space-y-6">
+            <div class="flex justify-between items-center px-2">
+                <h3 class="text-lg font-headline font-bold text-teal-100" data-i18n="admin_orders">Заказы</h3>
+                <button onclick="showScreen('admin-schedule')" class="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+                    <span class="material-symbols-outlined text-sm">calendar_month</span>
+                    <span data-i18n="admin_schedule">График</span>
                 </button>
-                <button onclick="showScreen('admin-schedule')" class="glass-panel p-6 rounded-2xl border border-primary/20 text-center space-y-2 cursor-pointer hover:bg-primary/5 transition-all">
-                    <span class="material-symbols-outlined text-3xl text-primary">calendar_month</span>
-                    <p class="text-xs font-bold uppercase" data-i18n="admin_schedule">График</p>
-                </button>
+            </div>
+            
+            <div class="admin-tabs-container flex gap-2 bg-teal-950/40 p-1.5 rounded-2xl border border-white/5">
+                <button onclick="renderAdminOrders('new')" class="order-tab flex-1 py-3 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all duration-300" data-tab="new" data-i18n="order_new">Новый заказ</button>
+                <button onclick="renderAdminOrders('process')" class="order-tab flex-1 py-3 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all duration-300" data-tab="process" data-i18n="order_process">В работе</button>
+                <button onclick="renderAdminOrders('done')" class="order-tab flex-1 py-3 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all duration-300" data-tab="done" data-i18n="order_done">Завершенные</button>
+            </div>
+
+            <div id="admin-orders-list" class="space-y-4">
+                <!-- Orders will be injected here -->
             </div>
         </div>
 
+        <!-- ADMIN CONTROLS (OLD - keeping some but moving list out) -->
+        <div id="admin-controls" class="hidden space-y-4">
+            <!-- Already handled by the tabs above, but can keep additional tools here -->
+        </div>
+
         <section class="space-y-4">
-            <h3 class="text-lg font-bold ml-2 opacity-60 uppercase tracking-widest text-xs" data-i18n="settings">Настройки</h3>
+            <h3 class="text-lg font-bold ml-2 opacity-60 uppercase tracking-widest text-xs" data-i18n="settings">
+                Настройки</h3>
             <div class="glass-panel rounded-2xl border border-white/5 overflow-hidden">
                 <div class="p-4 flex items-center justify-between border-b border-white/5">
                     <div class="flex items-center gap-3">
@@ -255,8 +316,10 @@
                         <span data-i18n="language">Язык</span>
                     </div>
                     <div class="flex bg-white/5 p-1 rounded-xl">
-                        <button onclick="setLanguage('ru')" id="lang-ru" class="px-4 py-1.5 rounded-lg text-sm font-bold transition-all">RU</button>
-                        <button onclick="setLanguage('ua')" id="lang-ua" class="px-4 py-1.5 rounded-lg text-sm font-bold transition-all">UA</button>
+                        <button onclick="setLanguage('ru')" id="lang-ru"
+                            class="px-4 py-1.5 rounded-lg text-sm font-bold transition-all">RU</button>
+                        <button onclick="setLanguage('ua')" id="lang-ua"
+                            class="px-4 py-1.5 rounded-lg text-sm font-bold transition-all">UA</button>
                     </div>
                 </div>
                 <div class="p-4 flex items-center justify-between">
@@ -276,14 +339,20 @@
     <!-- SCREEN: ADMIN ORDERS -->
     <main id="admin-orders-screen" class="screen pt-28 px-6 max-w-5xl mx-auto space-y-12 pb-32">
         <div class="flex justify-between items-center">
-             <h1 class="text-3xl font-headline font-bold" data-i18n="admin_orders">Заказы</h1>
-             <button onclick="showScreen('profile')" class="text-primary"><span class="material-symbols-outlined">close</span></button>
+            <h1 class="text-3xl font-headline font-bold" data-i18n="admin_orders">Заказы</h1>
+            <button onclick="showScreen('profile')" class="text-primary"><span
+                    class="material-symbols-outlined">close</span></button>
         </div>
-        
+
         <div class="flex gap-2 bg-white/5 p-1 rounded-2xl">
-            <button onclick="renderAdminOrders('new')" class="order-tab active flex-1 py-3 rounded-xl text-sm font-bold" data-tab="new" data-i18n="order_new">Новые</button>
-            <button onclick="renderAdminOrders('process')" class="order-tab flex-1 py-3 rounded-xl text-sm font-bold text-on-surface/40" data-tab="process" data-i18n="order_process">В работе</button>
-            <button onclick="renderAdminOrders('done')" class="order-tab flex-1 py-3 rounded-xl text-sm font-bold text-on-surface/40" data-tab="done" data-i18n="order_done">Завершенные</button>
+            <button onclick="renderAdminOrders('new')" class="order-tab active flex-1 py-3 rounded-xl text-sm font-bold"
+                data-tab="new" data-i18n="order_new">Новые</button>
+            <button onclick="renderAdminOrders('process')"
+                class="order-tab flex-1 py-3 rounded-xl text-sm font-bold text-on-surface/40" data-tab="process"
+                data-i18n="order_process">В работе</button>
+            <button onclick="renderAdminOrders('done')"
+                class="order-tab flex-1 py-3 rounded-xl text-sm font-bold text-on-surface/40" data-tab="done"
+                data-i18n="order_done">Завершенные</button>
         </div>
 
         <div id="orders-list" class="space-y-4">
@@ -294,37 +363,49 @@
     <!-- SCREEN: ADMIN SCHEDULE -->
     <main id="admin-schedule-screen" class="screen pt-28 px-6 max-w-5xl mx-auto space-y-12 pb-32">
         <div class="flex justify-between items-center">
-             <h1 class="text-3xl font-headline font-bold" data-i18n="admin_schedule">График</h1>
-             <button onclick="showScreen('profile')" class="text-primary"><span class="material-symbols-outlined">close</span></button>
+            <h1 class="text-3xl font-headline font-bold" data-i18n="admin_schedule">График</h1>
+            <button onclick="showScreen('profile')" class="text-primary"><span
+                    class="material-symbols-outlined">close</span></button>
         </div>
 
         <section class="space-y-4">
             <p class="text-sm opacity-60" data-i18n="schedule_hint">Выберите дату и окна времени для приема</p>
             <div id="admin-calendar-container" class="flex gap-3 overflow-x-auto no-scrollbar pb-2"></div>
-            
+
             <div id="admin-time-slots" class="grid grid-cols-4 gap-3 pt-4">
                 <!-- Слоты времени для админа -->
             </div>
-            
-            <button onclick="saveSchedule()" class="w-full py-5 bg-primary text-on-primary rounded-full font-bold mt-8 shadow-xl shadow-primary/20" data-i18n="btn_save_schedule">Сохранить график</button>
+
+            <button onclick="saveSchedule()"
+                class="w-full py-5 bg-primary text-on-primary rounded-full font-bold mt-8 shadow-xl shadow-primary/20"
+                data-i18n="btn_save_schedule">Сохранить график</button>
         </section>
     </main>
 
     <!-- NAV -->
-    <nav class="fixed bottom-8 left-0 right-0 z-50 flex justify-around items-end mx-auto bg-teal-950/80 backdrop-blur-2xl w-[95%] max-w-md rounded-[2rem] px-2 py-3 border border-white/10 shadow-2xl">
-        <button onclick="showScreen('home')" class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300" data-screen="home">
+    <nav
+        class="fixed bottom-8 left-0 right-0 z-50 flex justify-around items-end mx-auto bg-teal-950/80 backdrop-blur-2xl w-[95%] max-w-md rounded-[2rem] px-2 py-3 border border-white/10 shadow-2xl">
+        <button onclick="showScreen('home')"
+            class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300"
+            data-screen="home">
             <span class="material-symbols-outlined">home</span>
             <span class="text-[10px] font-medium" data-i18n="nav_home">Главная</span>
         </button>
-        <button onclick="showScreen('services')" class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300" data-screen="services">
+        <button onclick="showScreen('services')"
+            class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300"
+            data-screen="services">
             <span class="material-symbols-outlined">spa</span>
             <span class="text-[10px] font-medium" data-i18n="nav_services">Услуги</span>
         </button>
-        <button onclick="showScreen('booking')" class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300" data-screen="booking">
+        <button onclick="showScreen('booking')"
+            class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300"
+            data-screen="booking">
             <span class="material-symbols-outlined">event_note</span>
             <span class="text-[10px] font-medium" data-i18n="nav_booking">Запись</span>
         </button>
-        <button onclick="showScreen('profile')" class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300" data-screen="profile">
+        <button onclick="showScreen('profile')"
+            class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300"
+            data-screen="profile">
             <span class="material-symbols-outlined">person</span>
             <span class="text-[10px] font-medium" data-i18n="nav_profile">Профиль</span>
         </button>
@@ -380,7 +461,7 @@
                 admin_panel: "Панель администратора",
                 admin_orders: "Заказы",
                 admin_schedule: "График",
-                order_new: "Новые",
+                order_new: "Новый заказ",
                 order_process: "В работе",
                 order_done: "Завершенные",
                 schedule_hint: "Выберите дату и окна времени для приема",
@@ -435,7 +516,7 @@
                 admin_panel: "Панель адміністратора",
                 admin_orders: "Замовлення",
                 admin_schedule: "Графік",
-                order_new: "Нові",
+                order_new: "Новий замовлення",
                 order_process: "В роботі",
                 order_done: "Завершені",
                 schedule_hint: "Оберіть дату та вікна часу для прийому",
@@ -451,12 +532,195 @@
         };
 
         function checkAdmin() {
-            // В идеале ADMIN_ID должен приходить с сервера, 
-            // но для Mini App мы можем временно проверять так или через секретный вход
-            const isAdmin = bookingData.userId.toString() === "5016203110" || tg.initDataUnsafe?.start_param === 'admin'; 
-            if (isAdmin) {
-                document.getElementById('admin-controls').classList.remove('hidden');
+            const adminId = "1007880085";
+            const currentUserId = bookingData.userId.toString();
+
+            console.log("Current User ID:", currentUserId);
+
+            if (currentUserId === adminId || tg.initDataUnsafe?.start_param === 'admin') {
+                const ordersContainer = document.getElementById('admin-orders-container');
+                const stats = document.getElementById('regular-user-stats');
+                const badge = document.getElementById('user-role-badge');
+                
+                if (ordersContainer) ordersContainer.classList.remove('hidden');
+                if (stats) stats.classList.add('hidden');
+                if (badge) badge.classList.remove('hidden');
+                
+                // Initial render for admin
+                renderAdminOrders('new');
+                
+                // If we are on home screen and user is admin, move them to their cabinet
+                if (document.getElementById('home-screen').classList.contains('active')) {
+                    showScreen('profile');
+                }
             }
+        }
+
+        let orders = [
+            { id: 1, userName: "Иван", service: "Лечебный массаж", date: "18 Апр", time: "14:00", price: "550 грн", status: "new", userId: "123456" },
+            { id: 2, userName: "Мария", service: "Расслабляющий массаж", date: "19 Апр", time: "10:00", price: "600 грн", status: "process", userId: "654321" },
+            { id: 3, userName: "Александр", service: "Антицеллюлитный массаж", date: "20 Апр", time: "16:00", price: "500 грн", status: "done", userId: "112233" }
+        ];
+
+        function renderAdminOrders(tab) {
+            console.log("Rendering orders for tab:", tab);
+            const tabsContainer = document.querySelector('.admin-tabs-container');
+            const ordersList = document.getElementById('admin-orders-list');
+            
+            if (!tabsContainer || !ordersList) return;
+
+            tabsContainer.querySelectorAll('.order-tab').forEach(t => {
+                const isActive = t.dataset.tab === tab;
+                t.classList.toggle('bg-primary', isActive);
+                t.classList.toggle('text-on-primary', isActive);
+                t.classList.toggle('text-on-surface/40', !isActive);
+                t.classList.toggle('bg-white/5', !isActive);
+            });
+
+            ordersList.innerHTML = '';
+            const filtered = orders.filter(o => o.status === tab);
+
+            if (filtered.length === 0) {
+                ordersList.innerHTML = `<div class="text-center py-20 opacity-40">Нет заказов</div>`;
+                return;
+            }
+
+            filtered.forEach(order => {
+                const card = document.createElement('div');
+                card.className = 'glass-panel p-6 rounded-2xl border border-white/5 space-y-4';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-[10px] uppercase opacity-60">${translations[currentLang].order_client}</p>
+                            <p class="font-bold text-lg text-teal-50">${order.userName}</p>
+                        </div>
+                        <p class="text-primary font-bold bg-primary/10 px-3 py-1 rounded-full text-sm border border-primary/20">${order.price}</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 py-3 border-y border-white/5">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm opacity-60">calendar_today</span>
+                            <div class="text-sm font-medium">${order.date}</div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm opacity-60">schedule</span>
+                            <div class="text-sm font-medium">${order.time}</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 text-on-surface-variant text-sm py-1">
+                        <span class="material-symbols-outlined text-sm">spa</span>
+                        <p>${order.service}</p>
+                    </div>
+                    <div class="flex gap-2 pt-2">
+                        ${order.status === 'new' ? `
+                            <button onclick="updateStatus(${order.id}, 'process')" class="flex-1 py-3 bg-primary text-on-primary rounded-xl text-xs font-bold hover:brightness-110 active:scale-95 transition-all">${translations[currentLang].status_to_work}</button>
+                            <button onclick="updateStatus(${order.id}, 'rejected')" class="flex-1 py-3 bg-red-500/20 text-red-400 rounded-xl text-xs font-bold hover:bg-red-500/30 active:scale-95 transition-all">${translations[currentLang].status_reject}</button>
+                        ` : ''}
+                        ${order.status === 'process' ? `
+                            <button onclick="updateStatus(${order.id}, 'done')" class="flex-1 py-3 bg-primary text-on-primary rounded-xl text-xs font-bold hover:brightness-110 active:scale-95 transition-all">${translations[currentLang].status_complete}</button>
+                        ` : ''}
+                    </div>
+                `;
+                ordersList.appendChild(card);
+            });
+        }
+
+        async function updateStatus(orderId, newStatus) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            order.status = (newStatus === 'rejected') ? 'rejected' : newStatus;
+
+            try {
+                await fetch('/api/book', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'update_status',
+                        orderId: orderId,
+                        status: newStatus,
+                        userId: order.userId,
+                        message: `Ваш заказ на ${order.date} изменен на статус: ${newStatus}`
+                    })
+                });
+                tg.showPopup({ message: "Статус обновлен и клиент уведомлен" });
+                renderAdminOrders(order.status === 'rejected' ? 'new' : order.status);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // --- SCHEDULE LOGIC ---
+        let adminSchedule = {};
+        let selectedAdminDate = "";
+
+        function renderAdminCalendar() {
+            const container = document.getElementById('admin-calendar-container');
+            if (!container) return;
+            container.innerHTML = '';
+            const today = new Date();
+
+            for (let i = 0; i < 14; i++) {
+                const date = new Date();
+                date.setDate(today.getDate() + i);
+                const day = date.getDate();
+                const month = MONTHS[currentLang][date.getMonth()];
+                const fullDateStr = `${day} ${month} ${date.getFullYear()}`;
+
+                const btn = document.createElement('button');
+                btn.className = 'flex-shrink-0 w-20 py-4 glass-panel border border-white/5 rounded-2xl flex flex-col items-center transition-all';
+                btn.innerHTML = `<span class="text-lg font-bold">${day}</span><span class="text-[10px] opacity-60">${month}</span>`;
+
+                btn.onclick = () => selectAdminDate(fullDateStr, btn);
+                container.appendChild(btn);
+
+                if (i === 0 && !selectedAdminDate) selectAdminDate(fullDateStr, btn);
+                else if (selectedAdminDate === fullDateStr) btn.classList.add('selected-item');
+            }
+        }
+
+        function selectAdminDate(dateStr, el) {
+            document.querySelectorAll('#admin-calendar-container button').forEach(b => b.classList.remove('selected-item'));
+            el.classList.add('selected-item');
+            selectedAdminDate = dateStr;
+            renderAdminTimeSlots(dateStr);
+        }
+
+        function renderAdminTimeSlots(dateStr) {
+            const container = document.getElementById('admin-time-slots');
+            if (!container) return;
+            container.innerHTML = '';
+            const times = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
+
+            const activeSlots = adminSchedule[dateStr] || [];
+
+            times.forEach(time => {
+                const isActive = activeSlots.includes(time);
+                const btn = document.createElement('button');
+                btn.className = `py-4 glass-panel border border-white/5 rounded-xl font-medium transition-all ${isActive ? 'selected-item' : 'opacity-40'}`;
+                btn.innerText = time;
+                btn.onclick = () => toggleSlot(dateStr, time, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function toggleSlot(date, time, el) {
+            if (!adminSchedule[date]) adminSchedule[date] = [];
+
+            const index = adminSchedule[date].indexOf(time);
+            if (index > -1) {
+                adminSchedule[date].splice(index, 1);
+                el.classList.remove('selected-item');
+                el.classList.add('opacity-40');
+            } else {
+                adminSchedule[date].push(time);
+                el.classList.add('selected-item');
+                el.classList.remove('opacity-40');
+            }
+        }
+
+        async function saveSchedule() {
+            tg.showPopup({ message: "График успешно сохранен!" });
+            showScreen('profile');
         }
 
         function setLanguage(lang) {
@@ -467,15 +731,15 @@
                     el.innerText = translations[lang][key];
                 }
             });
-            
+
             document.getElementById('lang-ru').classList.toggle('bg-primary', lang === 'ru');
             document.getElementById('lang-ru').classList.toggle('text-on-primary', lang === 'ru');
             document.getElementById('lang-ua').classList.toggle('bg-primary', lang === 'ua');
             document.getElementById('lang-ua').classList.toggle('text-on-primary', lang === 'ua');
-            
+
             updateSummary();
             if (document.getElementById('booking-screen').classList.contains('active')) {
-                renderCalendar(); 
+                renderCalendar();
             }
             if (document.getElementById('admin-schedule-screen').classList.contains('active')) {
                 renderAdminCalendar();
@@ -485,10 +749,10 @@
         function toggleTheme() {
             currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
             document.documentElement.classList.toggle('dark', currentTheme === 'dark');
-            
+
             const icon = document.getElementById('theme-icon');
             const text = document.getElementById('theme-text');
-            
+
             if (currentTheme === 'dark') {
                 icon.innerText = 'light_mode';
                 text.setAttribute('data-i18n', 'theme_dark');
@@ -521,7 +785,7 @@
 
         // Заполняем профиль
         document.getElementById('user-display-name').innerText = bookingData.userName;
-        if(tg.initDataUnsafe?.user?.photo_url) {
+        if (tg.initDataUnsafe?.user?.photo_url) {
             document.getElementById('profile-pic').src = tg.initDataUnsafe.user.photo_url;
             document.getElementById('user-avatar').src = tg.initDataUnsafe.user.photo_url;
         }
@@ -529,8 +793,8 @@
         function showScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const screen = document.getElementById(screenId + '-screen');
-            if(screen) screen.classList.add('active');
-            
+            if (screen) screen.classList.add('active');
+
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 const isActive = btn.dataset.screen === screenId;
                 btn.classList.toggle('bg-primary/20', isActive);
@@ -538,32 +802,20 @@
             });
             window.scrollTo(0, 0);
             updateSummary();
-            
+
+            if (screenId === 'profile') {
+                checkAdmin();
+            }
             if (screenId === 'booking') initBookingScreen();
-            if (screenId === 'admin-orders') renderAdminOrders('new');
-            if (screenId === 'admin-schedule') renderAdminCalendar();
         }
 
-        // --- ADMIN LOGIC ---
-        let orders = [
-            { id: 1, userName: "Иван", service: "Лечебный", date: "18 Апр 2026", time: "14:00", price: "550 грн", status: "new", userId: "123456" },
-            { id: 2, userName: "Мария", service: "Relax", date: "19 Апр 2026", time: "10:00", price: "600 грн", status: "process", userId: "654321" }
-        ];
-
-        function renderAdminOrders(tab) {
-            document.querySelectorAll('.order-tab').forEach(t => {
-                const isActive = t.dataset.tab === tab;
-                t.classList.toggle('active', isActive);
-                t.classList.toggle('bg-primary/20', isActive);
-                t.classList.toggle('text-primary', isActive);
-                t.classList.toggle('text-on-surface/40', !isActive);
-            });
+        // Removed duplicate renderAdminOrders and orders array
 
             const list = document.getElementById('orders-list');
             list.innerHTML = '';
-            
+
             const filtered = orders.filter(o => o.status === tab);
-            
+
             if (filtered.length === 0) {
                 list.innerHTML = `<div class="text-center py-20 opacity-40">Нет заказов</div>`;
                 return;
@@ -608,18 +860,18 @@
         async function updateStatus(orderId, newStatus) {
             const order = orders.find(o => o.id === orderId);
             if (!order) return;
-            
+
             order.status = (newStatus === 'rejected') ? 'rejected' : newStatus;
-            
+
             try {
                 // Уведомление клиента через существующий API
-                await fetch('/api/book', { 
+                await fetch('/api/book', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        action: 'update_status', 
-                        orderId: orderId, 
-                        status: newStatus, 
+                    body: JSON.stringify({
+                        action: 'update_status',
+                        orderId: orderId,
+                        status: newStatus,
                         userId: order.userId,
                         message: `Ваш заказ на ${order.date} изменен на статус: ${newStatus}`
                     })
@@ -632,7 +884,7 @@
         }
 
         // --- SCHEDULE LOGIC ---
-        let adminSchedule = {}; 
+        let adminSchedule = {};
         let selectedAdminDate = "";
 
         function renderAdminCalendar() {
@@ -640,21 +892,21 @@
             if (!container) return;
             container.innerHTML = '';
             const today = new Date();
-            
+
             for (let i = 0; i < 14; i++) {
                 const date = new Date();
                 date.setDate(today.getDate() + i);
                 const day = date.getDate();
                 const month = MONTHS[currentLang][date.getMonth()];
                 const fullDateStr = `${day} ${month} ${date.getFullYear()}`;
-                
+
                 const btn = document.createElement('button');
                 btn.className = 'flex-shrink-0 w-20 py-4 glass-panel border border-white/5 rounded-2xl flex flex-col items-center transition-all';
                 btn.innerHTML = `<span class="text-lg font-bold">${day}</span><span class="text-[10px] opacity-60">${month}</span>`;
-                
+
                 btn.onclick = () => selectAdminDate(fullDateStr, btn);
                 container.appendChild(btn);
-                
+
                 if (i === 0 && !selectedAdminDate) selectAdminDate(fullDateStr, btn);
                 else if (selectedAdminDate === fullDateStr) btn.classList.add('selected-item');
             }
@@ -672,7 +924,7 @@
             if (!container) return;
             container.innerHTML = '';
             const times = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
-            
+
             const activeSlots = adminSchedule[dateStr] || [];
 
             times.forEach(time => {
@@ -687,7 +939,7 @@
 
         function toggleSlot(date, time, el) {
             if (!adminSchedule[date]) adminSchedule[date] = [];
-            
+
             const index = adminSchedule[date].indexOf(time);
             if (index > -1) {
                 adminSchedule[date].splice(index, 1);
@@ -716,19 +968,19 @@
             if (!container) return;
             container.innerHTML = '';
             const today = new Date();
-            
+
             const currentMonths = MONTHS[currentLang];
             const currentWeekdays = WEEKDAYS[currentLang];
-            
+
             for (let i = 0; i < 14; i++) {
                 const date = new Date();
                 date.setDate(today.getDate() + i);
-                
+
                 const day = date.getDate();
                 const month = currentMonths[date.getMonth()];
                 const weekday = currentWeekdays[date.getDay()];
                 const fullDateStr = `${day} ${month} ${date.getFullYear()}`;
-                
+
                 const btn = document.createElement('button');
                 btn.className = 'flex-shrink-0 w-20 py-4 glass-panel border border-white/5 rounded-2xl flex flex-col items-center transition-all duration-300';
                 btn.innerHTML = `
@@ -736,10 +988,10 @@
                     <span class="text-lg font-bold">${day}</span>
                     <span class="text-[10px] opacity-60">${month}</span>
                 `;
-                
+
                 btn.onclick = (e) => selectDate(fullDateStr, btn);
                 container.appendChild(btn);
-                
+
                 if (i === 0 && !bookingData.date) {
                     selectDate(fullDateStr, btn);
                 } else if (bookingData.date === fullDateStr) {
@@ -752,7 +1004,7 @@
             document.querySelectorAll('#date-container button').forEach(b => b.classList.remove('selected-item'));
             el.classList.add('selected-item');
             bookingData.date = dateStr;
-            bookingData.time = ""; 
+            bookingData.time = "";
             renderTimeSlots(dateStr);
             updateSummary();
         }
@@ -761,41 +1013,41 @@
             const container = document.getElementById('time-container');
             if (!container) return;
             container.innerHTML = '';
-            
+
             const times = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
-            
+
             const now = new Date();
             const selectedDate = new Date();
             const [day, monthName, year] = dateStr.split(' ');
-            
+
             // Находим индекс месяца для текущего языка
             const monthIdx = MONTHS[currentLang].indexOf(monthName);
             selectedDate.setFullYear(parseInt(year), monthIdx, parseInt(day));
-            
+
             const isToday = selectedDate.toDateString() === now.toDateString();
 
             times.forEach(time => {
                 const [hours, minutes] = time.split(':').map(Number);
                 const slotTime = new Date(selectedDate);
                 slotTime.setHours(hours, minutes, 0, 0);
-                
+
                 const isPast = isToday && slotTime < now;
-                
+
                 // Проверяем доступность из графика админа (если есть график)
                 const isAvailable = adminSchedule[dateStr] ? adminSchedule[dateStr].includes(time) : true;
-                
+
                 const btn = document.createElement('button');
                 btn.className = `py-4 glass-panel border border-white/5 rounded-xl font-medium transition-all duration-300 ${isPast || !isAvailable ? 'opacity-20 cursor-not-allowed grayscale' : 'hover:bg-white/5'}`;
                 btn.innerText = time;
-                
+
                 if (!isPast && isAvailable) {
                     btn.onclick = () => selectTime(time, btn);
                 }
-                
+
                 if (bookingData.time === time) {
                     btn.classList.add('selected-item');
                 }
-                
+
                 container.appendChild(btn);
             });
         }
@@ -825,10 +1077,10 @@
 
         function updateSummary() {
             const finalPriceEl = document.getElementById('final-price');
-            if(finalPriceEl) finalPriceEl.innerText = bookingData.price;
+            if (finalPriceEl) finalPriceEl.innerText = bookingData.price;
 
             const summary = document.getElementById('booking-summary');
-            if(summary) {
+            if (summary) {
                 if (bookingData.date && bookingData.time) {
                     summary.innerText = `${bookingData.date}${translations[currentLang].at}${bookingData.time}`;
                     summary.classList.remove('opacity-40');
@@ -837,9 +1089,9 @@
                     summary.classList.add('opacity-40');
                 }
             }
-            
+
             const confirmBtn = document.getElementById('confirm-btn');
-            if(confirmBtn) {
+            if (confirmBtn) {
                 const canConfirm = bookingData.date && bookingData.time;
                 confirmBtn.disabled = !canConfirm;
                 confirmBtn.classList.toggle('opacity-50', !canConfirm);
@@ -873,7 +1125,7 @@
                     tg.showPopup({
                         title: translations[currentLang].booking_success_title,
                         message: msg,
-                        buttons: [{type: 'close'}]
+                        buttons: [{ type: 'close' }]
                     });
                     showScreen('home');
                 } else {
@@ -889,8 +1141,9 @@
 
         // Инициализация
         setLanguage('ru');
-        checkAdmin();
         showScreen('home');
+        checkAdmin();
     </script>
 </body>
+
 </html>
