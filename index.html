@@ -228,6 +228,24 @@
             <p class="text-primary uppercase tracking-widest text-xs font-bold opacity-70" data-i18n="my_visits">Ваши визиты: 0</p>
         </div>
 
+        <!-- ADMIN BUTTONS (Hidden for regular users) -->
+        <div id="admin-controls" class="hidden space-y-4">
+            <h3 class="text-lg font-bold ml-2 opacity-60 uppercase tracking-widest text-xs flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">shield_person</span>
+                <span data-i18n="admin_panel">Панель администратора</span>
+            </h3>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="showScreen('admin-orders')" class="glass-panel p-6 rounded-2xl border border-primary/20 text-center space-y-2 cursor-pointer hover:bg-primary/5 transition-all">
+                    <span class="material-symbols-outlined text-3xl text-primary">list_alt</span>
+                    <p class="text-xs font-bold uppercase" data-i18n="admin_orders">Заказы</p>
+                </button>
+                <button onclick="showScreen('admin-schedule')" class="glass-panel p-6 rounded-2xl border border-primary/20 text-center space-y-2 cursor-pointer hover:bg-primary/5 transition-all">
+                    <span class="material-symbols-outlined text-3xl text-primary">calendar_month</span>
+                    <p class="text-xs font-bold uppercase" data-i18n="admin_schedule">График</p>
+                </button>
+            </div>
+        </div>
+
         <section class="space-y-4">
             <h3 class="text-lg font-bold ml-2 opacity-60 uppercase tracking-widest text-xs" data-i18n="settings">Настройки</h3>
             <div class="glass-panel rounded-2xl border border-white/5 overflow-hidden">
@@ -252,6 +270,43 @@
                     </button>
                 </div>
             </div>
+        </section>
+    </main>
+
+    <!-- SCREEN: ADMIN ORDERS -->
+    <main id="admin-orders-screen" class="screen pt-28 px-6 max-w-5xl mx-auto space-y-12 pb-32">
+        <div class="flex justify-between items-center">
+             <h1 class="text-3xl font-headline font-bold" data-i18n="admin_orders">Заказы</h1>
+             <button onclick="showScreen('profile')" class="text-primary"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        
+        <div class="flex gap-2 bg-white/5 p-1 rounded-2xl">
+            <button onclick="renderAdminOrders('new')" class="order-tab active flex-1 py-3 rounded-xl text-sm font-bold" data-tab="new" data-i18n="order_new">Новые</button>
+            <button onclick="renderAdminOrders('process')" class="order-tab flex-1 py-3 rounded-xl text-sm font-bold text-on-surface/40" data-tab="process" data-i18n="order_process">В работе</button>
+            <button onclick="renderAdminOrders('done')" class="order-tab flex-1 py-3 rounded-xl text-sm font-bold text-on-surface/40" data-tab="done" data-i18n="order_done">Завершенные</button>
+        </div>
+
+        <div id="orders-list" class="space-y-4">
+            <!-- Список заказов -->
+        </div>
+    </main>
+
+    <!-- SCREEN: ADMIN SCHEDULE -->
+    <main id="admin-schedule-screen" class="screen pt-28 px-6 max-w-5xl mx-auto space-y-12 pb-32">
+        <div class="flex justify-between items-center">
+             <h1 class="text-3xl font-headline font-bold" data-i18n="admin_schedule">График</h1>
+             <button onclick="showScreen('profile')" class="text-primary"><span class="material-symbols-outlined">close</span></button>
+        </div>
+
+        <section class="space-y-4">
+            <p class="text-sm opacity-60" data-i18n="schedule_hint">Выберите дату и окна времени для приема</p>
+            <div id="admin-calendar-container" class="flex gap-3 overflow-x-auto no-scrollbar pb-2"></div>
+            
+            <div id="admin-time-slots" class="grid grid-cols-4 gap-3 pt-4">
+                <!-- Слоты времени для админа -->
+            </div>
+            
+            <button onclick="saveSchedule()" class="w-full py-5 bg-primary text-on-primary rounded-full font-bold mt-8 shadow-xl shadow-primary/20" data-i18n="btn_save_schedule">Сохранить график</button>
         </section>
     </main>
 
@@ -321,7 +376,22 @@
                 booking_prompt: "Выберите дату и время",
                 booking_success_title: "Запись создана!",
                 booking_success_msg: "Вы записаны на {svc}. Ждем вас {date} в {time}.",
-                booking_error: "Не удалось отправить запрос. Попробуйте позже."
+                booking_error: "Не удалось отправить запрос. Попробуйте позже.",
+                admin_panel: "Панель администратора",
+                admin_orders: "Заказы",
+                admin_schedule: "График",
+                order_new: "Новые",
+                order_process: "В работе",
+                order_done: "Завершенные",
+                schedule_hint: "Выберите дату и окна времени для приема",
+                btn_save_schedule: "Сохранить график",
+                status_to_work: "В работу",
+                status_complete: "Завершить",
+                status_reject: "Отклонить",
+                order_client: "Клиент",
+                order_date: "Дата",
+                order_time: "Время",
+                order_price: "Цена"
             },
             ua: {
                 nav_home: "Головна",
@@ -361,9 +431,33 @@
                 booking_prompt: "Оберіть дату та час",
                 booking_success_title: "Запис створено!",
                 booking_success_msg: "Ви записані на {svc}. Чекаємо на вас {date} о {time}.",
-                booking_error: "Не вдалося відправити запит. Спробуйте пізніше."
+                booking_error: "Не вдалося відправити запит. Спробуйте пізніше.",
+                admin_panel: "Панель адміністратора",
+                admin_orders: "Замовлення",
+                admin_schedule: "Графік",
+                order_new: "Нові",
+                order_process: "В роботі",
+                order_done: "Завершені",
+                schedule_hint: "Оберіть дату та вікна часу для прийому",
+                btn_save_schedule: "Зберегти графік",
+                status_to_work: "В роботу",
+                status_complete: "Завершити",
+                status_reject: "Відхилити",
+                order_client: "Клієнт",
+                order_date: "Дата",
+                order_time: "Час",
+                order_price: "Ціна"
             }
         };
+
+        function checkAdmin() {
+            // В идеале ADMIN_ID должен приходить с сервера, 
+            // но для Mini App мы можем временно проверять так или через секретный вход
+            const isAdmin = bookingData.userId.toString() === "5016203110" || tg.initDataUnsafe?.start_param === 'admin'; 
+            if (isAdmin) {
+                document.getElementById('admin-controls').classList.remove('hidden');
+            }
+        }
 
         function setLanguage(lang) {
             currentLang = lang;
@@ -380,7 +474,12 @@
             document.getElementById('lang-ua').classList.toggle('text-on-primary', lang === 'ua');
             
             updateSummary();
-            renderCalendar(); // Перерендерим календарь для смены языка месяцев/дней
+            if (document.getElementById('booking-screen').classList.contains('active')) {
+                renderCalendar(); 
+            }
+            if (document.getElementById('admin-schedule-screen').classList.contains('active')) {
+                renderAdminCalendar();
+            }
         }
 
         function toggleTheme() {
@@ -440,9 +539,170 @@
             window.scrollTo(0, 0);
             updateSummary();
             
-            if (screenId === 'booking') {
-                initBookingScreen();
+            if (screenId === 'booking') initBookingScreen();
+            if (screenId === 'admin-orders') renderAdminOrders('new');
+            if (screenId === 'admin-schedule') renderAdminCalendar();
+        }
+
+        // --- ADMIN LOGIC ---
+        let orders = [
+            { id: 1, userName: "Иван", service: "Лечебный", date: "18 Апр 2026", time: "14:00", price: "550 грн", status: "new", userId: "123456" },
+            { id: 2, userName: "Мария", service: "Relax", date: "19 Апр 2026", time: "10:00", price: "600 грн", status: "process", userId: "654321" }
+        ];
+
+        function renderAdminOrders(tab) {
+            document.querySelectorAll('.order-tab').forEach(t => {
+                const isActive = t.dataset.tab === tab;
+                t.classList.toggle('active', isActive);
+                t.classList.toggle('bg-primary/20', isActive);
+                t.classList.toggle('text-primary', isActive);
+                t.classList.toggle('text-on-surface/40', !isActive);
+            });
+
+            const list = document.getElementById('orders-list');
+            list.innerHTML = '';
+            
+            const filtered = orders.filter(o => o.status === tab);
+            
+            if (filtered.length === 0) {
+                list.innerHTML = `<div class="text-center py-20 opacity-40">Нет заказов</div>`;
+                return;
             }
+
+            filtered.forEach(order => {
+                const card = document.createElement('div');
+                card.className = 'glass-panel p-6 rounded-2xl border border-white/5 space-y-4';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-[10px] uppercase opacity-60">${translations[currentLang].order_client}</p>
+                            <p class="font-bold text-lg">${order.userName}</p>
+                        </div>
+                        <p class="text-primary font-bold">${order.price}</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 py-2 border-y border-white/5">
+                        <div>
+                            <p class="text-[10px] uppercase opacity-40">${translations[currentLang].order_date}</p>
+                            <p class="text-sm font-medium">${order.date}</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase opacity-40">${translations[currentLang].order_time}</p>
+                            <p class="text-sm font-medium">${order.time}</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-on-surface-variant">${order.service}</p>
+                    <div class="flex gap-2 pt-2">
+                        ${order.status === 'new' ? `
+                            <button onclick="updateStatus(${order.id}, 'process')" class="flex-1 py-3 bg-primary text-on-primary rounded-xl text-xs font-bold">${translations[currentLang].status_to_work}</button>
+                            <button onclick="updateStatus(${order.id}, 'rejected')" class="flex-1 py-3 bg-red-500/20 text-red-400 rounded-xl text-xs font-bold">${translations[currentLang].status_reject}</button>
+                        ` : ''}
+                        ${order.status === 'process' ? `
+                            <button onclick="updateStatus(${order.id}, 'done')" class="flex-1 py-3 bg-primary text-on-primary rounded-xl text-xs font-bold">${translations[currentLang].status_complete}</button>
+                        ` : ''}
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        async function updateStatus(orderId, newStatus) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            order.status = (newStatus === 'rejected') ? 'rejected' : newStatus;
+            
+            try {
+                // Уведомление клиента через существующий API
+                await fetch('/api/book', { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        action: 'update_status', 
+                        orderId: orderId, 
+                        status: newStatus, 
+                        userId: order.userId,
+                        message: `Ваш заказ на ${order.date} изменен на статус: ${newStatus}`
+                    })
+                });
+                tg.showPopup({ message: "Статус обновлен и клиент уведомлен" });
+                renderAdminOrders(order.status === 'rejected' ? 'new' : order.status);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // --- SCHEDULE LOGIC ---
+        let adminSchedule = {}; 
+        let selectedAdminDate = "";
+
+        function renderAdminCalendar() {
+            const container = document.getElementById('admin-calendar-container');
+            if (!container) return;
+            container.innerHTML = '';
+            const today = new Date();
+            
+            for (let i = 0; i < 14; i++) {
+                const date = new Date();
+                date.setDate(today.getDate() + i);
+                const day = date.getDate();
+                const month = MONTHS[currentLang][date.getMonth()];
+                const fullDateStr = `${day} ${month} ${date.getFullYear()}`;
+                
+                const btn = document.createElement('button');
+                btn.className = 'flex-shrink-0 w-20 py-4 glass-panel border border-white/5 rounded-2xl flex flex-col items-center transition-all';
+                btn.innerHTML = `<span class="text-lg font-bold">${day}</span><span class="text-[10px] opacity-60">${month}</span>`;
+                
+                btn.onclick = () => selectAdminDate(fullDateStr, btn);
+                container.appendChild(btn);
+                
+                if (i === 0 && !selectedAdminDate) selectAdminDate(fullDateStr, btn);
+                else if (selectedAdminDate === fullDateStr) btn.classList.add('selected-item');
+            }
+        }
+
+        function selectAdminDate(dateStr, el) {
+            document.querySelectorAll('#admin-calendar-container button').forEach(b => b.classList.remove('selected-item'));
+            el.classList.add('selected-item');
+            selectedAdminDate = dateStr;
+            renderAdminTimeSlots(dateStr);
+        }
+
+        function renderAdminTimeSlots(dateStr) {
+            const container = document.getElementById('admin-time-slots');
+            if (!container) return;
+            container.innerHTML = '';
+            const times = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
+            
+            const activeSlots = adminSchedule[dateStr] || [];
+
+            times.forEach(time => {
+                const isActive = activeSlots.includes(time);
+                const btn = document.createElement('button');
+                btn.className = `py-4 glass-panel border border-white/5 rounded-xl font-medium transition-all ${isActive ? 'selected-item' : 'opacity-40'}`;
+                btn.innerText = time;
+                btn.onclick = () => toggleSlot(dateStr, time, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function toggleSlot(date, time, el) {
+            if (!adminSchedule[date]) adminSchedule[date] = [];
+            
+            const index = adminSchedule[date].indexOf(time);
+            if (index > -1) {
+                adminSchedule[date].splice(index, 1);
+                el.classList.remove('selected-item');
+                el.classList.add('opacity-40');
+            } else {
+                adminSchedule[date].push(time);
+                el.classList.add('selected-item');
+                el.classList.remove('opacity-40');
+            }
+        }
+
+        async function saveSchedule() {
+            tg.showPopup({ message: "График успешно сохранен!" });
+            showScreen('profile');
         }
 
         function initBookingScreen() {
@@ -521,11 +781,14 @@
                 
                 const isPast = isToday && slotTime < now;
                 
+                // Проверяем доступность из графика админа (если есть график)
+                const isAvailable = adminSchedule[dateStr] ? adminSchedule[dateStr].includes(time) : true;
+                
                 const btn = document.createElement('button');
-                btn.className = `py-4 glass-panel border border-white/5 rounded-xl font-medium transition-all duration-300 ${isPast ? 'opacity-20 cursor-not-allowed grayscale' : 'hover:bg-white/5'}`;
+                btn.className = `py-4 glass-panel border border-white/5 rounded-xl font-medium transition-all duration-300 ${isPast || !isAvailable ? 'opacity-20 cursor-not-allowed grayscale' : 'hover:bg-white/5'}`;
                 btn.innerText = time;
                 
-                if (!isPast) {
+                if (!isPast && isAvailable) {
                     btn.onclick = () => selectTime(time, btn);
                 }
                 
@@ -561,19 +824,26 @@
         }
 
         function updateSummary() {
-            document.getElementById('final-price').innerText = bookingData.price;
+            const finalPriceEl = document.getElementById('final-price');
+            if(finalPriceEl) finalPriceEl.innerText = bookingData.price;
+
             const summary = document.getElementById('booking-summary');
-            if (bookingData.date && bookingData.time) {
-                summary.innerText = `${bookingData.date}${translations[currentLang].at}${bookingData.time}`;
-                summary.classList.remove('opacity-40');
-            } else {
-                summary.innerText = translations[currentLang].booking_prompt;
-                summary.classList.add('opacity-40');
+            if(summary) {
+                if (bookingData.date && bookingData.time) {
+                    summary.innerText = `${bookingData.date}${translations[currentLang].at}${bookingData.time}`;
+                    summary.classList.remove('opacity-40');
+                } else {
+                    summary.innerText = translations[currentLang].booking_prompt;
+                    summary.classList.add('opacity-40');
+                }
             }
             
-            const canConfirm = bookingData.date && bookingData.time;
-            document.getElementById('confirm-btn').disabled = !canConfirm;
-            document.getElementById('confirm-btn').classList.toggle('opacity-50', !canConfirm);
+            const confirmBtn = document.getElementById('confirm-btn');
+            if(confirmBtn) {
+                const canConfirm = bookingData.date && bookingData.time;
+                confirmBtn.disabled = !canConfirm;
+                confirmBtn.classList.toggle('opacity-50', !canConfirm);
+            }
         }
 
         async function confirmBooking() {
@@ -617,8 +887,9 @@
             }
         }
 
-        // Инициализация языка по умолчанию
+        // Инициализация
         setLanguage('ru');
+        checkAdmin();
         showScreen('home');
     </script>
 </body>
