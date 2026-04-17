@@ -144,28 +144,28 @@
     <main id="booking-screen" class="screen pt-32 pb-40 px-6 max-w-4xl mx-auto space-y-10">
         <section>
             <h3 class="text-xl font-headline mb-4">Выберите дату</h3>
-            <div class="flex gap-3 overflow-x-auto no-scrollbar">
-                <button onclick="selectItem('date', '17 Октября', this)" class="flex-shrink-0 w-20 py-4 glass-panel border border-white/5 rounded-xl">17 Окт</button>
-                <button onclick="selectItem('date', '18 Октября', this)" class="flex-shrink-0 w-20 py-4 glass-panel border border-white/5 rounded-xl">18 Окт</button>
-                <button onclick="selectItem('date', '19 Октября', this)" class="flex-shrink-0 w-20 py-4 glass-panel border border-white/5 rounded-xl">19 Окт</button>
+            <div id="date-container" class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+                <!-- Календарь будет здесь -->
             </div>
         </section>
 
         <section>
             <h3 class="text-xl font-headline mb-4">Время</h3>
-            <div class="grid grid-cols-3 gap-3">
-                <button onclick="selectItem('time', '10:00', this)" class="py-3 glass-panel border border-white/5 rounded-lg">10:00</button>
-                <button onclick="selectItem('time', '14:00', this)" class="py-3 glass-panel border border-white/5 rounded-lg">14:00</button>
-                <button onclick="selectItem('time', '18:00', this)" class="py-3 glass-panel border border-white/5 rounded-lg">18:00</button>
+            <div id="time-container" class="grid grid-cols-3 gap-3">
+                <!-- Время будет здесь -->
             </div>
         </section>
 
         <div class="pt-10 border-t border-white/5 space-y-4">
+            <div class="flex justify-between text-xl px-2">
+                <span class="opacity-60 text-sm uppercase tracking-widest self-center">Детали записи:</span>
+                <span id="booking-summary" class="text-sm font-medium text-right"></span>
+            </div>
             <div class="flex justify-between text-xl">
                 <span>Итого:</span>
-                <span id="final-price" class="font-bold text-primary">0 ₽</span>
+                <span id="final-price" class="font-bold text-primary text-2xl">0 ₽</span>
             </div>
-            <button onclick="confirmBooking()" id="confirm-btn" class="w-full py-5 bg-primary text-on-primary rounded-full font-bold text-lg shadow-xl shadow-primary/20">Подтвердить запись</button>
+            <button onclick="confirmBooking()" id="confirm-btn" class="w-full py-5 bg-primary text-on-primary rounded-full font-bold text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">Подтвердить запись</button>
         </div>
     </main>
 
@@ -180,9 +180,9 @@
 
     <!-- NAV -->
     <nav class="fixed bottom-8 left-0 right-0 z-50 flex justify-around items-center mx-auto bg-teal-950/80 backdrop-blur-2xl w-[90%] max-w-md rounded-full px-6 py-2 border border-white/10 shadow-2xl">
-        <button onclick="showScreen('home')" class="nav-btn p-3 rounded-full text-teal-400/60" data-screen="home"><span class="material-symbols-outlined">home</span></button>
-        <button onclick="showScreen('booking')" class="nav-btn p-3 rounded-full text-teal-400/60" data-screen="booking"><span class="material-symbols-outlined">event_note</span></button>
-        <button onclick="showScreen('profile')" class="nav-btn p-3 rounded-full text-teal-400/60" data-screen="profile"><span class="material-symbols-outlined">person</span></button>
+        <button onclick="showScreen('home')" class="nav-btn p-3 rounded-full text-teal-400/60 transition-all duration-300" data-screen="home"><span class="material-symbols-outlined">home</span></button>
+        <button onclick="showScreen('booking')" class="nav-btn p-3 rounded-full text-teal-400/60 transition-all duration-300" data-screen="booking"><span class="material-symbols-outlined">event_note</span></button>
+        <button onclick="showScreen('profile')" class="nav-btn p-3 rounded-full text-teal-400/60 transition-all duration-300" data-screen="profile"><span class="material-symbols-outlined">person</span></button>
     </nav>
 
     <script>
@@ -194,10 +194,13 @@
             userId: tg.initDataUnsafe?.user?.id || "555",
             service: "Глубокий массаж тканей",
             master: "Елена",
-            date: "17 Октября",
-            time: "14:00",
+            date: "",
+            time: "",
             price: "4500 ₽"
         };
+
+        const MONTHS = ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"];
+        const WEEKDAYS = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
 
         // Заполняем профиль
         document.getElementById('user-display-name').innerText = bookingData.userName;
@@ -208,13 +211,112 @@
 
         function showScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId + '-screen').classList.add('active');
+            const screen = document.getElementById(screenId + '-screen');
+            if(screen) screen.classList.add('active');
             
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.toggle('bg-primary/20', btn.dataset.screen === screenId);
-                btn.classList.toggle('text-primary', btn.dataset.screen === screenId);
+                const isActive = btn.dataset.screen === screenId;
+                btn.classList.toggle('bg-primary/20', isActive);
+                btn.classList.toggle('text-primary', isActive);
             });
             window.scrollTo(0, 0);
+            updateSummary();
+            
+            if (screenId === 'booking') {
+                initBookingScreen();
+            }
+        }
+
+        function initBookingScreen() {
+            if (!bookingData.date) {
+                renderCalendar();
+            }
+        }
+
+        function renderCalendar() {
+            const container = document.getElementById('date-container');
+            container.innerHTML = '';
+            const today = new Date();
+            
+            for (let i = 0; i < 14; i++) {
+                const date = new Date();
+                date.setDate(today.getDate() + i);
+                
+                const day = date.getDate();
+                const month = MONTHS[date.getMonth()];
+                const weekday = WEEKDAYS[date.getDay()];
+                const dateStr = `${day} ${month}`;
+                const fullDateStr = `${day} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+                
+                const btn = document.createElement('button');
+                btn.className = 'flex-shrink-0 w-20 py-4 glass-panel border border-white/5 rounded-2xl flex flex-col items-center transition-all duration-300';
+                btn.innerHTML = `
+                    <span class="text-[10px] uppercase opacity-60 mb-1">${weekday}</span>
+                    <span class="text-lg font-bold">${day}</span>
+                    <span class="text-[10px] opacity-60">${month}</span>
+                `;
+                
+                btn.onclick = (e) => selectDate(fullDateStr, btn);
+                container.appendChild(btn);
+                
+                if (i === 0 && !bookingData.date) {
+                    selectDate(fullDateStr, btn);
+                } else if (bookingData.date === fullDateStr) {
+                    btn.classList.add('selected-item');
+                }
+            }
+        }
+
+        function selectDate(dateStr, el) {
+            document.querySelectorAll('#date-container button').forEach(b => b.classList.remove('selected-item'));
+            el.classList.add('selected-item');
+            bookingData.date = dateStr;
+            bookingData.time = ""; // Сбрасываем время при смене даты
+            renderTimeSlots(dateStr);
+            updateSummary();
+        }
+
+        function renderTimeSlots(dateStr) {
+            const container = document.getElementById('time-container');
+            container.innerHTML = '';
+            
+            const times = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
+            
+            const now = new Date();
+            const selectedDate = new Date();
+            const [day, monthName, year] = dateStr.split(' ');
+            const monthIdx = MONTHS.indexOf(monthName);
+            selectedDate.setFullYear(parseInt(year), monthIdx, parseInt(day));
+            
+            const isToday = selectedDate.toDateString() === now.toDateString();
+
+            times.forEach(time => {
+                const [hours, minutes] = time.split(':').map(Number);
+                const slotTime = new Date(selectedDate);
+                slotTime.setHours(hours, minutes, 0, 0);
+                
+                const isPast = isToday && slotTime < now;
+                
+                const btn = document.createElement('button');
+                btn.className = `py-4 glass-panel border border-white/5 rounded-xl font-medium transition-all duration-300 ${isPast ? 'opacity-20 cursor-not-allowed grayscale' : 'hover:bg-white/5'}`;
+                btn.innerText = time;
+                
+                if (!isPast) {
+                    btn.onclick = () => selectTime(time, btn);
+                }
+                
+                if (bookingData.time === time) {
+                    btn.classList.add('selected-item');
+                }
+                
+                container.appendChild(btn);
+            });
+        }
+
+        function selectTime(time, el) {
+            document.querySelectorAll('#time-container button').forEach(b => b.classList.remove('selected-item'));
+            el.classList.add('selected-item');
+            bookingData.time = time;
             updateSummary();
         }
 
@@ -227,6 +329,7 @@
         }
 
         function selectItem(type, value, el) {
+            // Эта функция теперь используется только для мастеров
             el.parentElement.querySelectorAll('button, div').forEach(b => b.classList.remove('selected-item'));
             el.classList.add('selected-item');
             bookingData[type] = value;
@@ -235,11 +338,29 @@
 
         function updateSummary() {
             document.getElementById('final-price').innerText = bookingData.price;
+            const summary = document.getElementById('booking-summary');
+            if (bookingData.date && bookingData.time) {
+                summary.innerText = `${bookingData.date} в ${bookingData.time}`;
+                summary.classList.remove('opacity-40');
+            } else {
+                summary.innerText = "Выберите дату и время";
+                summary.classList.add('opacity-40');
+            }
+            
+            const canConfirm = bookingData.date && bookingData.time;
+            document.getElementById('confirm-btn').disabled = !canConfirm;
+            document.getElementById('confirm-btn').classList.toggle('opacity-50', !canConfirm);
         }
 
         async function confirmBooking() {
+            if (!bookingData.date || !bookingData.time) {
+                tg.showAlert("Пожалуйста, выберите дату и время");
+                return;
+            }
+
             const btn = document.getElementById('confirm-btn');
-            btn.innerText = "Отправка...";
+            const originalText = btn.innerText;
+            btn.innerText = "Оформление...";
             btn.disabled = true;
 
             try {
@@ -251,18 +372,18 @@
 
                 if (response.ok) {
                     tg.showPopup({
-                        title: 'Успех!',
-                        message: 'Ваша запись подтверждена. Мастер свяжется с вами.',
-                        buttons: [{type: 'ok'}]
+                        title: 'Запись создана!',
+                        message: `Вы записаны на ${bookingData.service}. Ждем вас ${bookingData.date} в ${bookingData.time}.`,
+                        buttons: [{type: 'close'}]
                     });
                     showScreen('home');
                 } else {
                     throw new Error();
                 }
             } catch (e) {
-                tg.showAlert("Ошибка при отправке. Попробуйте снова.");
+                tg.showAlert("Не удалось отправить запрос. Проверьте интернет или попробуйте позже.");
             } finally {
-                btn.innerText = "Подтвердить запись";
+                btn.innerText = originalText;
                 btn.disabled = false;
             }
         }
