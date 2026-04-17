@@ -106,6 +106,7 @@
         <div class="space-y-4 text-center py-10">
             <p class="font-label text-primary text-sm tracking-widest uppercase opacity-80" data-i18n="tagline">Погружение в покой</p>
             <h1 class="text-5xl font-headline font-semibold text-teal-50" data-i18n="welcome">Добро пожаловать</h1>
+            <p class="text-2xl font-headline text-primary font-medium tracking-wide">Diamond Body Studio</p>
             <p class="text-on-surface-variant max-w-xs mx-auto text-sm leading-relaxed" data-i18n="welcome_sub">Ваше идеальное место для восстановления сил и гармонии тела.</p>
         </div>
 
@@ -125,7 +126,7 @@
             
             <div class="grid grid-cols-2 gap-4">
                 <div onclick="showScreen('services')" class="glass-panel p-6 rounded-2xl border border-white/5 text-center space-y-2 cursor-pointer hover:bg-white/5 transition-all">
-                    <span class="material-symbols-outlined text-3xl text-primary">dry_cleaning</span>
+                    <span class="material-symbols-outlined text-3xl text-primary">spa</span>
                     <p class="text-xs font-bold uppercase" data-i18n="services_short">Услуги</p>
                 </div>
                 <div onclick="showScreen('booking')" class="glass-panel p-6 rounded-2xl border border-white/5 text-center space-y-2 cursor-pointer hover:bg-white/5 transition-all">
@@ -138,13 +139,9 @@
         <section class="space-y-6">
             <h2 class="text-2xl font-headline font-medium text-teal-100" data-i18n="our_masters">Наши специалисты</h2>
             <div class="flex gap-4 overflow-x-auto no-scrollbar">
-                <div onclick="selectItem('master', 'Елена', this)" class="flex-shrink-0 w-32 text-center cursor-pointer group">
+                <div onclick="selectItem('master', 'Елена', this)" class="flex-shrink-0 w-32 text-center cursor-pointer group selected-item rounded-2xl p-2">
                     <img class="w-24 h-24 rounded-full mx-auto border-2 border-transparent group-hover:border-primary transition-all object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9ec8utCY9PtsJ14KdUMpqbWBBEMqKKsyxuKBkzWJRwlmlQUrYYUJIXa58Mj5QTNBVyqP4tQBA7C2o8esd4yVF2kQ830vyWA8OxmsckA2eKcOFBRW6I5lc5RZa3Q-cDOZFre5n3rnbigDwrnobrF6OAnGftCYtcNbzCGQca-tUQpBhIpCI6TT_OwyCtXlCfZ8kBkoKYtAC3bRi-7b0SnMb5QYRbEcTNElvjARTg880Z_NAMarW-_HXzShDDkOFqrec1VPO-fuislb9">
                     <p class="mt-2 font-medium" data-i18n="master_elena">Елена</p>
-                </div>
-                <div onclick="selectItem('master', 'Михаил', this)" class="flex-shrink-0 w-32 text-center cursor-pointer group">
-                    <img class="w-24 h-24 rounded-full mx-auto border-2 border-transparent group-hover:border-primary transition-all object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHfTeA1TgbMs_qLRhbzCYg_cv-XPawHQJYWwK3Vw_f3_N3hd2Cv-dATenb9g-y1plzK_vvesEY1OvcCVV8oHu1ibi79cniqp6rtYa-R2YCXLoZ-lKy3K8fRgEYWxYFBq-dr2Ir0gdz5dWMQ6xD1y4-wj6pVRGwmLyp60LmGSa4-SeMW2St2E2OoVcWd5-gtiMPujbYpGeoBUvlDdLQgTUYf6VNws6GFKYAB5xGfNaGXqNh-gVvptwsLGs1-RFUS1K3huO-b9_LVyuW">
-                    <p class="mt-2 font-medium" data-i18n="master_mikhail">Михаил</p>
                 </div>
             </div>
         </section>
@@ -183,11 +180,11 @@
         <button onclick="showScreen('services')" class="mb-6 flex items-center gap-2 text-primary">
             <span class="material-symbols-outlined">arrow_back</span> <span data-i18n="back">Назад</span>
         </button>
-        <div class="glass-panel p-8 rounded-2xl border border-white/5 space-y-6">
-            <h1 id="detail-title" class="text-4xl font-headline font-bold">Услуга</h1>
-            <p id="detail-desc" class="text-xl text-on-surface-variant">Описание услуги будет здесь.</p>
-            <div class="flex justify-between items-center py-4 border-t border-white/5">
-                <span class="text-2xl font-bold text-primary" id="detail-price">0 грн</span>
+        <div class="glass-panel p-8 rounded-2xl border border-white/5 space-y-6 overflow-hidden">
+            <h1 id="detail-title" class="text-2xl sm:text-3xl md:text-4xl font-headline font-bold break-words leading-tight">Услуга</h1>
+            <p id="detail-desc" class="text-lg text-on-surface-variant leading-relaxed">Описание услуги будет здесь.</p>
+            <div class="flex justify-between items-center py-4 border-t border-white/5 gap-4">
+                <span class="text-xl font-bold text-primary whitespace-nowrap" id="detail-price">0 грн</span>
                 <button onclick="showScreen('booking')" class="px-8 py-4 bg-primary text-on-primary rounded-full font-bold" data-i18n="select_time">Выбрать время</button>
             </div>
         </div>
@@ -265,7 +262,7 @@
             <span class="text-[10px] font-medium" data-i18n="nav_home">Главная</span>
         </button>
         <button onclick="showScreen('services')" class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300" data-screen="services">
-            <span class="material-symbols-outlined">dry_cleaning</span>
+            <span class="material-symbols-outlined">spa</span>
             <span class="text-[10px] font-medium" data-i18n="nav_services">Услуги</span>
         </button>
         <button onclick="showScreen('booking')" class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300" data-screen="booking">
@@ -301,7 +298,6 @@
                 booking_short: "Запись",
                 our_masters: "Наши специалисты",
                 master_elena: "Елена",
-                master_mikhail: "Михаил",
                 services_list_title: "Каталог услуг",
                 svc_anti: "Антицеллюлитный",
                 svc_anti_desc: "Коррекция фигуры • Лимфодренаж",
@@ -342,7 +338,6 @@
                 booking_short: "Запис",
                 our_masters: "Наші фахівці",
                 master_elena: "Олена",
-                master_mikhail: "Михайло",
                 services_list_title: "Каталог послуг",
                 svc_anti: "Антицелюлітний",
                 svc_anti_desc: "Корекція фігури • Лімфодренаж",
