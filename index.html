@@ -16,13 +16,13 @@
                     "colors": {
                         "surface-tint": "#a5cfc7",
                         "on-primary": "#1f4741",
-                        "background": "#0c0f0f",
-                        "surface-container-high": "#1d2020",
-                        "surface-variant": "#222727",
+                        "background": "var(--bg-base)",
+                        "surface-container-high": "var(--surface)",
+                        "surface-variant": "var(--surface-variant)",
                         "primary": "#a5cfc7",
                         "primary-container": "#325953",
-                        "on-surface": "#e3e6e6",
-                        "on-surface-variant": "#a8acab",
+                        "on-surface": "var(--text-base)",
+                        "on-surface-variant": "var(--text-variant)",
                     },
                     "borderRadius": {
                         "DEFAULT": "1rem",
@@ -40,8 +40,24 @@
         }
     </script>
     <style>
+        :root {
+            --bg-base: #f8fafc;
+            --surface: rgba(255, 255, 255, 0.7);
+            --surface-variant: rgba(0, 0, 0, 0.05);
+            --border-glow: rgba(50, 89, 83, 0.1);
+            --text-base: #0c0f0f;
+            --text-variant: #64748b;
+        }
+        .dark {
+            --bg-base: #0c0f0f;
+            --surface: rgba(34, 39, 39, 0.6);
+            --surface-variant: #222727;
+            --border-glow: rgba(165, 207, 199, 0.08);
+            --text-base: #e3e6e6;
+            --text-variant: #a8acab;
+        }
         .glass-panel {
-            background: rgba(34, 39, 39, 0.6);
+            background: var(--surface);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
         }
@@ -49,11 +65,13 @@
             font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
         }
         body {
-            background-color: #0c0f0f;
+            background-color: var(--bg-base);
             background-image: radial-gradient(circle at 0% 0%, rgba(50, 89, 83, 0.15) 0%, transparent 50%),
-                              radial-gradient(circle at 100% 100%, rgba(165, 207, 199, 0.08) 0%, transparent 50%);
+                              radial-gradient(circle at 100% 100%, var(--border-glow) 0%, transparent 50%);
             background-attachment: fixed;
             min-height: 100vh;
+            color: var(--on-surface);
+            transition: background-color 0.4s ease;
         }
         .screen { display: none; animation: fadeIn 0.3s ease-out; }
         .screen.active { display: block; }
@@ -85,64 +103,92 @@
 
     <!-- SCREEN: HOME -->
     <main id="home-screen" class="screen active pt-28 px-6 max-w-5xl mx-auto space-y-12 pb-32">
-        <div class="space-y-2">
-            <p class="font-label text-primary text-sm tracking-widest uppercase opacity-80">Погружение в покой</p>
-            <h1 class="text-5xl font-headline font-semibold text-teal-50">Добро пожаловать</h1>
+        <div class="space-y-4 text-center py-10">
+            <p class="font-label text-primary text-sm tracking-widest uppercase opacity-80" data-i18n="tagline">Погружение в покой</p>
+            <h1 class="text-5xl font-headline font-semibold text-teal-50" data-i18n="welcome">Добро пожаловать</h1>
+            <p class="text-on-surface-variant max-w-xs mx-auto text-sm leading-relaxed" data-i18n="welcome_sub">Ваше идеальное место для восстановления сил и гармонии тела.</p>
         </div>
 
         <section class="space-y-6">
-            <h2 class="text-2xl font-headline font-medium text-teal-100">Услуги</h2>
-            <div class="grid grid-cols-1 gap-4">
-                <div onclick="selectService('Антицеллюлитный массаж', 'от 500 грн')" class="glass-panel p-6 rounded-xl border border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5 transition-all">
-                    <div>
-                        <h3 class="text-xl font-semibold">Антицеллюлитный</h3>
-                        <p class="text-on-surface-variant text-sm">Коррекция фигуры • Лимфодренаж</p>
+            <h2 class="text-2xl font-headline font-medium text-teal-100" data-i18n="popular_services">Популярное</h2>
+            <div class="glass-panel p-6 rounded-3xl border border-white/5 space-y-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-primary/20 rounded-2xl flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined">bolt</span>
                     </div>
-                    <span class="text-primary font-bold">500 грн</span>
+                    <div>
+                        <p class="text-xs uppercase opacity-60 font-bold" data-i18n="special_offer">Спецпредложение</p>
+                        <p class="font-semibold text-teal-100" data-i18n="offer_text">Скидка 15% на первый визит</p>
+                    </div>
                 </div>
-                <div onclick="selectService('Лечебный массаж', 'от 550 грн')" class="glass-panel p-6 rounded-xl border border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5 transition-all">
-                    <div>
-                        <h3 class="text-xl font-semibold">Лечебный</h3>
-                        <p class="text-on-surface-variant text-sm">Проработка мышц • Снятие боли</p>
-                    </div>
-                    <span class="text-primary font-bold">550 грн</span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div onclick="showScreen('services')" class="glass-panel p-6 rounded-2xl border border-white/5 text-center space-y-2 cursor-pointer hover:bg-white/5 transition-all">
+                    <span class="material-symbols-outlined text-3xl text-primary">dry_cleaning</span>
+                    <p class="text-xs font-bold uppercase" data-i18n="services_short">Услуги</p>
                 </div>
-                <div onclick="selectService('Расслабляющий массаж', 'от 600 грн')" class="glass-panel p-6 rounded-xl border border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5 transition-all">
-                    <div>
-                        <h3 class="text-xl font-semibold">Расслабляющий</h3>
-                        <p class="text-on-surface-variant text-sm">Relax-session • Ароматерапия</p>
-                    </div>
-                    <span class="text-primary font-bold">600 грн</span>
+                <div onclick="showScreen('booking')" class="glass-panel p-6 rounded-2xl border border-white/5 text-center space-y-2 cursor-pointer hover:bg-white/5 transition-all">
+                    <span class="material-symbols-outlined text-3xl text-primary">event_available</span>
+                    <p class="text-xs font-bold uppercase" data-i18n="booking_short">Запись</p>
                 </div>
             </div>
         </section>
 
         <section class="space-y-6">
-            <h2 class="text-2xl font-headline font-medium text-teal-100">Мастера</h2>
+            <h2 class="text-2xl font-headline font-medium text-teal-100" data-i18n="our_masters">Наши специалисты</h2>
             <div class="flex gap-4 overflow-x-auto no-scrollbar">
                 <div onclick="selectItem('master', 'Елена', this)" class="flex-shrink-0 w-32 text-center cursor-pointer group">
                     <img class="w-24 h-24 rounded-full mx-auto border-2 border-transparent group-hover:border-primary transition-all object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9ec8utCY9PtsJ14KdUMpqbWBBEMqKKsyxuKBkzWJRwlmlQUrYYUJIXa58Mj5QTNBVyqP4tQBA7C2o8esd4yVF2kQ830vyWA8OxmsckA2eKcOFBRW6I5lc5RZa3Q-cDOZFre5n3rnbigDwrnobrF6OAnGftCYtcNbzCGQca-tUQpBhIpCI6TT_OwyCtXlCfZ8kBkoKYtAC3bRi-7b0SnMb5QYRbEcTNElvjARTg880Z_NAMarW-_HXzShDDkOFqrec1VPO-fuislb9">
-                    <p class="mt-2 font-medium">Елена</p>
+                    <p class="mt-2 font-medium" data-i18n="master_elena">Елена</p>
                 </div>
                 <div onclick="selectItem('master', 'Михаил', this)" class="flex-shrink-0 w-32 text-center cursor-pointer group">
                     <img class="w-24 h-24 rounded-full mx-auto border-2 border-transparent group-hover:border-primary transition-all object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHfTeA1TgbMs_qLRhbzCYg_cv-XPawHQJYWwK3Vw_f3_N3hd2Cv-dATenb9g-y1plzK_vvesEY1OvcCVV8oHu1ibi79cniqp6rtYa-R2YCXLoZ-lKy3K8fRgEYWxYFBq-dr2Ir0gdz5dWMQ6xD1y4-wj6pVRGwmLyp60LmGSa4-SeMW2St2E2OoVcWd5-gtiMPujbYpGeoBUvlDdLQgTUYf6VNws6GFKYAB5xGfNaGXqNh-gVvptwsLGs1-RFUS1K3huO-b9_LVyuW">
-                    <p class="mt-2 font-medium">Михаил</p>
+                    <p class="mt-2 font-medium" data-i18n="master_mikhail">Михаил</p>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- SCREEN: SERVICES -->
+    <main id="services-screen" class="screen pt-28 px-6 max-w-5xl mx-auto space-y-12 pb-32">
+        <h1 class="text-4xl font-headline font-bold text-teal-50" data-i18n="services_list_title">Каталог услуг</h1>
+        <div class="grid grid-cols-1 gap-4">
+            <div onclick="selectService('Антицеллюлитный массаж', 'от 500 грн', 'Антицеллюлитный', 'Коррекция фигуры • Лимфодренаж')" class="glass-panel p-6 rounded-xl border border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5 transition-all">
+                <div>
+                    <h3 class="text-xl font-semibold" data-i18n="svc_anti">Антицеллюлитный</h3>
+                    <p class="text-on-surface-variant text-sm" data-i18n="svc_anti_desc">Коррекция фигуры • Лимфодренаж</p>
+                </div>
+                <span class="text-primary font-bold">500 грн</span>
+            </div>
+            <div onclick="selectService('Лечебный массаж', 'от 550 грн', 'Лечебный', 'Проработка мышц • Снятие боли')" class="glass-panel p-6 rounded-xl border border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5 transition-all">
+                <div>
+                    <h3 class="text-xl font-semibold" data-i18n="svc_med">Лечебный</h3>
+                    <p class="text-on-surface-variant text-sm" data-i18n="svc_med_desc">Проработка мышц • Снятие боли</p>
+                </div>
+                <span class="text-primary font-bold">550 грн</span>
+            </div>
+            <div onclick="selectService('Расслабляющий массаж', 'от 600 грн', 'Расслабляющий', 'Relax-session • Ароматерапия')" class="glass-panel p-6 rounded-xl border border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5 transition-all">
+                <div>
+                    <h3 class="text-xl font-semibold" data-i18n="svc_relax">Расслабляющий</h3>
+                    <p class="text-on-surface-variant text-sm" data-i18n="svc_relax_desc">Relax-session • Ароматерапия</p>
+                </div>
+                <span class="text-primary font-bold">600 грн</span>
+            </div>
+        </div>
+    </main>
+
     <!-- SCREEN: SERVICE DETAIL -->
     <main id="service-detail-screen" class="screen pt-20 pb-40 px-6 max-w-4xl mx-auto">
-        <button onclick="showScreen('home')" class="mb-6 flex items-center gap-2 text-primary">
-            <span class="material-symbols-outlined">arrow_back</span> Назад
+        <button onclick="showScreen('services')" class="mb-6 flex items-center gap-2 text-primary">
+            <span class="material-symbols-outlined">arrow_back</span> <span data-i18n="back">Назад</span>
         </button>
         <div class="glass-panel p-8 rounded-2xl border border-white/5 space-y-6">
-            <h1 id="detail-title" class="text-4xl font-headline font-bold">Глубокий массаж тканей</h1>
-            <p class="text-xl text-on-surface-variant">Проработка мышц и фасций для снятия хронического напряжения.</p>
+            <h1 id="detail-title" class="text-4xl font-headline font-bold">Услуга</h1>
+            <p id="detail-desc" class="text-xl text-on-surface-variant">Описание услуги будет здесь.</p>
             <div class="flex justify-between items-center py-4 border-t border-white/5">
                 <span class="text-2xl font-bold text-primary" id="detail-price">0 грн</span>
-                <button onclick="showScreen('booking')" class="px-8 py-4 bg-primary text-on-primary rounded-full font-bold">Выбрать время</button>
+                <button onclick="showScreen('booking')" class="px-8 py-4 bg-primary text-on-primary rounded-full font-bold" data-i18n="select_time">Выбрать время</button>
             </div>
         </div>
     </main>
@@ -150,51 +196,215 @@
     <!-- SCREEN: BOOKING -->
     <main id="booking-screen" class="screen pt-32 pb-40 px-6 max-w-4xl mx-auto space-y-10">
         <section>
-            <h3 class="text-xl font-headline mb-4">Выберите дату</h3>
-            <div id="date-container" class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
-                <!-- Календарь будет здесь -->
-            </div>
+            <h3 class="text-xl font-headline mb-4" data-i18n="select_date">Выберите дату</h3>
+            <div id="date-container" class="flex gap-3 overflow-x-auto no-scrollbar pb-2"></div>
         </section>
 
         <section>
-            <h3 class="text-xl font-headline mb-4">Время</h3>
-            <div id="time-container" class="grid grid-cols-3 gap-3">
-                <!-- Время будет здесь -->
-            </div>
+            <h3 class="text-xl font-headline mb-4" data-i18n="select_time">Время</h3>
+            <div id="time-container" class="grid grid-cols-4 gap-3"></div>
         </section>
 
         <div class="pt-10 border-t border-white/5 space-y-4">
             <div class="flex justify-between text-xl px-2">
-                <span class="opacity-60 text-sm uppercase tracking-widest self-center">Детали записи:</span>
+                <span class="opacity-60 text-sm uppercase tracking-widest self-center" data-i18n="booking_details">Детали записи:</span>
                 <span id="booking-summary" class="text-sm font-medium text-right"></span>
             </div>
             <div class="flex justify-between text-xl">
-                <span>Итого:</span>
+                <span data-i18n="total">Итого:</span>
                 <span id="final-price" class="font-bold text-primary text-2xl">0 грн</span>
             </div>
-            <button onclick="confirmBooking()" id="confirm-btn" class="w-full py-5 bg-primary text-on-primary rounded-full font-bold text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">Подтвердить запись</button>
+            <button onclick="confirmBooking()" id="confirm-btn" class="w-full py-5 bg-primary text-on-primary rounded-full font-bold text-lg shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all" data-i18n="btn_confirm">Подтвердить запись</button>
         </div>
     </main>
 
     <!-- SCREEN: PROFILE -->
-    <main id="profile-screen" class="screen pt-32 pb-40 px-6 max-w-5xl mx-auto">
-        <div class="glass-panel p-8 rounded-2xl border border-white/5 text-center space-y-4">
-            <img id="profile-pic" class="w-32 h-32 rounded-full mx-auto border-4 border-primary/20" src="">
+    <main id="profile-screen" class="screen pt-32 pb-40 px-6 max-w-5xl mx-auto space-y-6">
+        <div class="glass-panel p-8 rounded-3xl border border-white/5 text-center space-y-4 shadow-2xl relative overflow-hidden">
+             <div class="absolute top-0 right-0 p-4">
+                <button onclick="toggleTheme()" class="w-10 h-10 rounded-full glass-panel border border-white/10 flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined" id="theme-icon">light_mode</span>
+                </button>
+            </div>
+            <img id="profile-pic" class="w-32 h-32 rounded-full mx-auto border-4 border-primary/20 shadow-xl" src="">
             <h1 id="user-display-name" class="text-3xl font-bold">Загрузка...</h1>
-            <p class="text-primary uppercase tracking-widest text-sm">Ваши визиты: 0</p>
+            <p class="text-primary uppercase tracking-widest text-xs font-bold opacity-70" data-i18n="my_visits">Ваши визиты: 0</p>
         </div>
+
+        <section class="space-y-4">
+            <h3 class="text-lg font-bold ml-2 opacity-60 uppercase tracking-widest text-xs" data-i18n="settings">Настройки</h3>
+            <div class="glass-panel rounded-2xl border border-white/5 overflow-hidden">
+                <div class="p-4 flex items-center justify-between border-b border-white/5">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">language</span>
+                        <span data-i18n="language">Язык</span>
+                    </div>
+                    <div class="flex bg-white/5 p-1 rounded-xl">
+                        <button onclick="setLanguage('ru')" id="lang-ru" class="px-4 py-1.5 rounded-lg text-sm font-bold transition-all">RU</button>
+                        <button onclick="setLanguage('ua')" id="lang-ua" class="px-4 py-1.5 rounded-lg text-sm font-bold transition-all">UA</button>
+                    </div>
+                </div>
+                <div class="p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">dark_mode</span>
+                        <span data-i18n="theme">Тема оформления</span>
+                    </div>
+                    <button onclick="toggleTheme()" class="text-primary text-sm font-bold flex items-center gap-2">
+                        <span id="theme-text" data-i18n="theme_dark">Тёмная</span>
+                        <span class="material-symbols-outlined text-sm">swap_horiz</span>
+                    </button>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- NAV -->
-    <nav class="fixed bottom-8 left-0 right-0 z-50 flex justify-around items-center mx-auto bg-teal-950/80 backdrop-blur-2xl w-[90%] max-w-md rounded-full px-6 py-2 border border-white/10 shadow-2xl">
-        <button onclick="showScreen('home')" class="nav-btn p-3 rounded-full text-teal-400/60 transition-all duration-300" data-screen="home"><span class="material-symbols-outlined">home</span></button>
-        <button onclick="showScreen('booking')" class="nav-btn p-3 rounded-full text-teal-400/60 transition-all duration-300" data-screen="booking"><span class="material-symbols-outlined">event_note</span></button>
-        <button onclick="showScreen('profile')" class="nav-btn p-3 rounded-full text-teal-400/60 transition-all duration-300" data-screen="profile"><span class="material-symbols-outlined">person</span></button>
+    <nav class="fixed bottom-8 left-0 right-0 z-50 flex justify-around items-end mx-auto bg-teal-950/80 backdrop-blur-2xl w-[95%] max-w-md rounded-[2rem] px-2 py-3 border border-white/10 shadow-2xl">
+        <button onclick="showScreen('home')" class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300" data-screen="home">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[10px] font-medium" data-i18n="nav_home">Главная</span>
+        </button>
+        <button onclick="showScreen('services')" class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300" data-screen="services">
+            <span class="material-symbols-outlined">dry_cleaning</span>
+            <span class="text-[10px] font-medium" data-i18n="nav_services">Услуги</span>
+        </button>
+        <button onclick="showScreen('booking')" class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300" data-screen="booking">
+            <span class="material-symbols-outlined">event_note</span>
+            <span class="text-[10px] font-medium" data-i18n="nav_booking">Запись</span>
+        </button>
+        <button onclick="showScreen('profile')" class="nav-btn flex flex-col items-center gap-1 flex-1 py-1 rounded-2xl text-teal-400/60 transition-all duration-300" data-screen="profile">
+            <span class="material-symbols-outlined">person</span>
+            <span class="text-[10px] font-medium" data-i18n="nav_profile">Профиль</span>
+        </button>
     </nav>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
+
+        let currentLang = 'ru';
+        let currentTheme = 'dark';
+
+        const translations = {
+            ru: {
+                nav_home: "Главная",
+                nav_services: "Услуги",
+                nav_booking: "Запись",
+                nav_profile: "Профиль",
+                tagline: "Погружение в покой",
+                welcome: "Добро пожаловать",
+                welcome_sub: "Ваше идеальное место для восстановления сил и гармонии тела.",
+                popular_services: "Популярное",
+                special_offer: "Спецпредложение",
+                offer_text: "Скидка 15% на первый визит",
+                services_short: "Услуги",
+                booking_short: "Запись",
+                our_masters: "Наши специалисты",
+                master_elena: "Елена",
+                master_mikhail: "Михаил",
+                services_list_title: "Каталог услуг",
+                svc_anti: "Антицеллюлитный",
+                svc_anti_desc: "Коррекция фигуры • Лимфодренаж",
+                svc_med: "Лечебный",
+                svc_med_desc: "Проработка мышц • Снятие боли",
+                svc_relax: "Расслабляющий",
+                svc_relax_desc: "Relax-session • Ароматерапия",
+                back: "Назад",
+                select_time: "Выбрать время",
+                select_date: "Выберите дату",
+                booking_details: "Детали записи:",
+                total: "Итого:",
+                btn_confirm: "Подтвердить запись",
+                my_visits: "Ваши визиты: 0",
+                settings: "Настройки",
+                language: "Язык",
+                theme: "Тема оформления",
+                theme_dark: "Тёмная",
+                theme_light: "Светлая",
+                at: " в ",
+                booking_prompt: "Выберите дату и время",
+                booking_success_title: "Запись создана!",
+                booking_success_msg: "Вы записаны на {svc}. Ждем вас {date} в {time}.",
+                booking_error: "Не удалось отправить запрос. Попробуйте позже."
+            },
+            ua: {
+                nav_home: "Головна",
+                nav_services: "Послуги",
+                nav_booking: "Запис",
+                nav_profile: "Профіль",
+                tagline: "Занурення в спокій",
+                welcome: "Ласкаво просимо",
+                welcome_sub: "Ваше ідеальне місце для відновлення сил та гармонії тіла.",
+                popular_services: "Популярне",
+                special_offer: "Спецпропозиція",
+                offer_text: "Знижка 15% на перший візит",
+                services_short: "Послуги",
+                booking_short: "Запис",
+                our_masters: "Наші фахівці",
+                master_elena: "Олена",
+                master_mikhail: "Михайло",
+                services_list_title: "Каталог послуг",
+                svc_anti: "Антицелюлітний",
+                svc_anti_desc: "Корекція фігури • Лімфодренаж",
+                svc_med: "Лікувальний",
+                svc_med_desc: "Проробка м'язів • Зняття болю",
+                svc_relax: "Розслабляючий",
+                svc_relax_desc: "Relax-session • Ароматерапія",
+                back: "Назад",
+                select_time: "Обрати час",
+                select_date: "Оберіть дату",
+                booking_details: "Деталі запису:",
+                total: "Разом:",
+                btn_confirm: "Підтвердити запис",
+                my_visits: "Ваші візити: 0",
+                settings: "Налаштування",
+                language: "Мова",
+                theme: "Тема оформлення",
+                theme_dark: "Темна",
+                theme_light: "Світла",
+                at: " о ",
+                booking_prompt: "Оберіть дату та час",
+                booking_success_title: "Запис створено!",
+                booking_success_msg: "Ви записані на {svc}. Чекаємо на вас {date} о {time}.",
+                booking_error: "Не вдалося відправити запит. Спробуйте пізніше."
+            }
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+            
+            document.getElementById('lang-ru').classList.toggle('bg-primary', lang === 'ru');
+            document.getElementById('lang-ru').classList.toggle('text-on-primary', lang === 'ru');
+            document.getElementById('lang-ua').classList.toggle('bg-primary', lang === 'ua');
+            document.getElementById('lang-ua').classList.toggle('text-on-primary', lang === 'ua');
+            
+            updateSummary();
+            renderCalendar(); // Перерендерим календарь для смены языка месяцев/дней
+        }
+
+        function toggleTheme() {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.classList.toggle('dark', currentTheme === 'dark');
+            
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+            
+            if (currentTheme === 'dark') {
+                icon.innerText = 'light_mode';
+                text.setAttribute('data-i18n', 'theme_dark');
+                text.innerText = translations[currentLang].theme_dark;
+            } else {
+                icon.innerText = 'dark_mode';
+                text.setAttribute('data-i18n', 'theme_light');
+                text.innerText = translations[currentLang].theme_light;
+            }
+        }
 
         let bookingData = {
             userName: tg.initDataUnsafe?.user?.first_name || "Гость",
@@ -206,8 +416,14 @@
             price: "от 600 грн"
         };
 
-        const MONTHS = ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"];
-        const WEEKDAYS = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+        const MONTHS = {
+            ru: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
+            ua: ["Січ", "Лют", "Бер", "Квіт", "Трав", "Черв", "Лип", "Серп", "Вер", "Жовт", "Лист", "Груд"]
+        };
+        const WEEKDAYS = {
+            ru: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+            ua: ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"]
+        };
 
         // Заполняем профиль
         document.getElementById('user-display-name').innerText = bookingData.userName;
@@ -242,18 +458,21 @@
 
         function renderCalendar() {
             const container = document.getElementById('date-container');
+            if (!container) return;
             container.innerHTML = '';
             const today = new Date();
+            
+            const currentMonths = MONTHS[currentLang];
+            const currentWeekdays = WEEKDAYS[currentLang];
             
             for (let i = 0; i < 14; i++) {
                 const date = new Date();
                 date.setDate(today.getDate() + i);
                 
                 const day = date.getDate();
-                const month = MONTHS[date.getMonth()];
-                const weekday = WEEKDAYS[date.getDay()];
-                const dateStr = `${day} ${month}`;
-                const fullDateStr = `${day} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+                const month = currentMonths[date.getMonth()];
+                const weekday = currentWeekdays[date.getDay()];
+                const fullDateStr = `${day} ${month} ${date.getFullYear()}`;
                 
                 const btn = document.createElement('button');
                 btn.className = 'flex-shrink-0 w-20 py-4 glass-panel border border-white/5 rounded-2xl flex flex-col items-center transition-all duration-300';
@@ -278,13 +497,14 @@
             document.querySelectorAll('#date-container button').forEach(b => b.classList.remove('selected-item'));
             el.classList.add('selected-item');
             bookingData.date = dateStr;
-            bookingData.time = ""; // Сбрасываем время при смене даты
+            bookingData.time = ""; 
             renderTimeSlots(dateStr);
             updateSummary();
         }
 
         function renderTimeSlots(dateStr) {
             const container = document.getElementById('time-container');
+            if (!container) return;
             container.innerHTML = '';
             
             const times = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
@@ -292,7 +512,9 @@
             const now = new Date();
             const selectedDate = new Date();
             const [day, monthName, year] = dateStr.split(' ');
-            const monthIdx = MONTHS.indexOf(monthName);
+            
+            // Находим индекс месяца для текущего языка
+            const monthIdx = MONTHS[currentLang].indexOf(monthName);
             selectedDate.setFullYear(parseInt(year), monthIdx, parseInt(day));
             
             const isToday = selectedDate.toDateString() === now.toDateString();
@@ -327,16 +549,16 @@
             updateSummary();
         }
 
-        function selectService(name, price) {
+        function selectService(name, price, title, desc) {
             bookingData.service = name;
             bookingData.price = price;
-            document.getElementById('detail-title').innerText = name;
+            document.getElementById('detail-title').innerText = title || name;
+            document.getElementById('detail-desc').innerText = desc || "";
             document.getElementById('detail-price').innerText = price;
             showScreen('service-detail');
         }
 
         function selectItem(type, value, el) {
-            // Эта функция теперь используется только для мастеров
             el.parentElement.querySelectorAll('button, div').forEach(b => b.classList.remove('selected-item'));
             el.classList.add('selected-item');
             bookingData[type] = value;
@@ -347,10 +569,10 @@
             document.getElementById('final-price').innerText = bookingData.price;
             const summary = document.getElementById('booking-summary');
             if (bookingData.date && bookingData.time) {
-                summary.innerText = `${bookingData.date} в ${bookingData.time}`;
+                summary.innerText = `${bookingData.date}${translations[currentLang].at}${bookingData.time}`;
                 summary.classList.remove('opacity-40');
             } else {
-                summary.innerText = "Выберите дату и время";
+                summary.innerText = translations[currentLang].booking_prompt;
                 summary.classList.add('opacity-40');
             }
             
@@ -361,13 +583,13 @@
 
         async function confirmBooking() {
             if (!bookingData.date || !bookingData.time) {
-                tg.showAlert("Пожалуйста, выберите дату и время");
+                tg.showAlert(translations[currentLang].booking_prompt);
                 return;
             }
 
             const btn = document.getElementById('confirm-btn');
             const originalText = btn.innerText;
-            btn.innerText = "Оформление...";
+            btn.innerText = currentLang === 'ru' ? "Оформление..." : "Оформлення...";
             btn.disabled = true;
 
             try {
@@ -378,9 +600,14 @@
                 });
 
                 if (response.ok) {
+                    const msg = translations[currentLang].booking_success_msg
+                        .replace('{svc}', bookingData.service)
+                        .replace('{date}', bookingData.date)
+                        .replace('{time}', bookingData.time);
+
                     tg.showPopup({
-                        title: 'Запись создана!',
-                        message: `Вы записаны на ${bookingData.service}. Ждем вас ${bookingData.date} в ${bookingData.time}.`,
+                        title: translations[currentLang].booking_success_title,
+                        message: msg,
                         buttons: [{type: 'close'}]
                     });
                     showScreen('home');
@@ -388,13 +615,15 @@
                     throw new Error();
                 }
             } catch (e) {
-                tg.showAlert("Не удалось отправить запрос. Проверьте интернет или попробуйте позже.");
+                tg.showAlert(translations[currentLang].booking_error);
             } finally {
                 btn.innerText = originalText;
                 btn.disabled = false;
             }
         }
 
+        // Инициализация языка по умолчанию
+        setLanguage('ru');
         showScreen('home');
     </script>
 </body>
